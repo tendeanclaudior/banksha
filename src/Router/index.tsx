@@ -1,6 +1,8 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
+  Home,
   OnBoarding,
   SecurityCode,
   SignIn,
@@ -8,8 +10,42 @@ import {
   SplashScreen,
   UploadPic,
 } from '../Pages';
+import {ButtomNavigation} from '../Components';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const MainApp = () => {
+  return (
+    <Tab.Navigator tabBar={props => <ButtomNavigation {...props} />}>
+      <Tab.Screen
+        name="Overview"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="History"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="AddMoney"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Statistic"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Reward"
+        component={Home}
+        options={{headerShown: false}}
+      />
+    </Tab.Navigator>
+  );
+};
 
 const Router = () => {
   return (
@@ -42,6 +78,11 @@ const Router = () => {
       <Stack.Screen
         name="SecurityCode"
         component={SecurityCode}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MainApp"
+        component={MainApp}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

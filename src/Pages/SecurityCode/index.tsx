@@ -97,9 +97,11 @@ const SecurityCode: FC<Props> = ({navigation}) => {
               if (item === 'del') {
                 setCode(prevCode => prevCode.slice(0, prevCode.length - 1));
               } else if (typeof item === 'number') {
-                if (code.length === pinLength) return;
+                if (code.length === pinLength) {
+                  navigation.replace('MainApp');
+                  return;
+                }
                 setCode(prevCode => [...prevCode, item]);
-                // navigation.replace(() => '');
               }
             }}
           />
