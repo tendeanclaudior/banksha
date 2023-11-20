@@ -38,5 +38,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#14193F',
+    width: '100%',
+    height: 45,
   },
 });

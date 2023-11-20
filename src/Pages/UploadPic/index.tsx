@@ -1,4 +1,3 @@
-import React, {FC} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,50 +5,40 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Fonts, LogoDark} from '../../Assets';
+import React from 'react';
+import {Fonts, IconUpload, LogoDark} from '../../Assets';
 import {Button, Gap, TextInput} from '../../Components';
 
-type Props = {
-  navigation: {goBack: Function; navigate: Function};
-};
-
-const SignUp: FC<Props> = ({navigation}) => {
+const UploadPic = () => {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.container}>
         <View style={styles.logoView}>
           <LogoDark />
         </View>
-        <Gap height={50} width={0} />
         <View>
           <Text style={styles.title}>Join Us to Unlock Your Growth</Text>
           <Gap height={30} width={0} />
           <View style={styles.formView}>
-            <TextInput title={'Full Name'} />
-            <Gap height={16} width={0} />
-            <TextInput title={'Email Address'} />
-            <Gap height={16} width={0} />
-            <TextInput title={'Password'} />
+            <View style={styles.UploadContent}>
+              <TouchableOpacity activeOpacity={0.5} style={styles.UpoloadView}>
+                <IconUpload />
+              </TouchableOpacity>
+              <Gap height={16} width={0} />
+              <Text style={styles.titleName}>Claudio Tendean</Text>
+            </View>
             <Gap height={30} width={0} />
-            <Button
-              title={'Continue'}
-              onPress={() => navigation.navigate('UploadPic')}
-            />
+            <TextInput title={'Set PIN (6 digit number)'} />
+            <Gap height={30} width={0} />
+            <Button title={'Continue'} onPress={() => ''} />
           </View>
-          <Gap height={50} width={0} />
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.buttonCreateAcc}
-            onPress={() => navigation.goBack('SignIn')}>
-            <Text style={styles.createAccTitle}>Sign In</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default SignUp;
+export default UploadPic;
 
 const styles = StyleSheet.create({
   page: {
@@ -78,16 +67,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 22,
     paddingVertical: 22,
   },
-  buttonCreateAcc: {
-    width: '100%',
-    height: 50,
+  UploadContent: {
+    alignItems: 'center',
+  },
+  UpoloadView: {
+    backgroundColor: '#F1F1F9',
+    width: 120,
+    height: 120,
+    borderRadius: 120,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  createAccTitle: {
-    fontSize: 15,
-    fontFamily: Fonts.Poppins[400],
-    color: '#696B76',
-    textAlign: 'center',
+  titleName: {
+    fontSize: 18,
+    fontFamily: Fonts.Poppins[500],
+    color: '#14193F',
+    textTransform: 'capitalize',
   },
 });
