@@ -2,12 +2,15 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
+  History,
   Home,
   OnBoarding,
+  Reward,
   SecurityCode,
   SignIn,
   SignUp,
   SplashScreen,
+  Statistic,
   UploadPic,
 } from '../Pages';
 import {ButtomNavigation} from '../Components';
@@ -25,7 +28,7 @@ const MainApp = () => {
       />
       <Tab.Screen
         name="History"
-        component={Home}
+        component={History}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -35,12 +38,12 @@ const MainApp = () => {
       />
       <Tab.Screen
         name="Statistic"
-        component={Home}
+        component={Statistic}
         options={{headerShown: false}}
       />
       <Tab.Screen
         name="Reward"
-        component={Home}
+        component={Reward}
         options={{headerShown: false}}
       />
     </Tab.Navigator>

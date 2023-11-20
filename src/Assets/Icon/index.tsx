@@ -16,6 +16,7 @@ import IconMore from './IconMore.png';
 import IconTopUpActive from './IconTopUpActive.png';
 import IconSendActive from './IconSendActive.png';
 import IconShopActive from './IconShopActive.png';
+import IconFilter from './IconFilter.svg';
 
 export {
   IconUpload,
@@ -36,4 +37,5 @@ export {
   IconTopUpActive,
   IconSendActive,
   IconShopActive,
+  IconFilter,
 };
