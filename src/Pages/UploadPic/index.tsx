@@ -1,3 +1,4 @@
+import React, {FC} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -5,11 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
 import {Fonts, IconUpload, LogoDark} from '../../Assets';
 import {Button, Gap, TextInput} from '../../Components';
 
-const UploadPic = () => {
+type Props = {
+  navigation: {replace: Function};
+};
+
+const UploadPic: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.container}>
@@ -30,7 +34,7 @@ const UploadPic = () => {
             <Gap height={30} width={0} />
             <TextInput title={'Set PIN (6 digit number)'} />
             <Gap height={30} width={0} />
-            <Button title={'Continue'} onPress={() => ''} />
+            <Button title={'Continue'} onPress={() => navigation.replace('')} />
           </View>
         </View>
       </View>

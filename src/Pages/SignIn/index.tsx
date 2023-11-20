@@ -10,7 +10,7 @@ import {Fonts, LogoDark} from '../../Assets';
 import {Button, Gap, TextInput} from '../../Components';
 
 type Props = {
-  navigation: {navigate: Function};
+  navigation: {navigate: Function; replace: Function};
 };
 
 const SignIn: FC<Props> = ({navigation}) => {
@@ -30,7 +30,10 @@ const SignIn: FC<Props> = ({navigation}) => {
             <Gap height={8} width={0} />
             <Text style={styles.titleForgot}>Forgot Password</Text>
             <Gap height={30} width={0} />
-            <Button title={'Sign In'} onPress={() => ''} />
+            <Button
+              title={'Sign In'}
+              onPress={() => navigation.replace('SecurityCode')}
+            />
           </View>
           <Gap height={50} width={0} />
           <TouchableOpacity
