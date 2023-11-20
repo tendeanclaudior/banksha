@@ -5,6 +5,9 @@ import SignUp from './SignUp';
 import UploadPic from './UploadPic';
 import SecurityCode from './SecurityCode';
 import Home from './Home';
+import History from './History';
+import Statistic from './Statistic';
+import Reward from './Reward';
 
 export {
   SplashScreen,
@@ -14,4 +17,7 @@ export {
   UploadPic,
   SecurityCode,
   Home,
+  History,
+  Statistic,
+  Reward,
 };
