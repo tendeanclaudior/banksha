@@ -6,12 +6,16 @@ import {Gap} from '../../Atoms';
 type Props = {
   icon: any;
   title: string;
+  onPress?: () => void;
 };
 
-const DoSomething: FC<Props> = ({icon, title}) => {
+const DoSomething: FC<Props> = ({icon, title, onPress}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.5} style={styles.buttonView}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.buttonView}
+        onPress={onPress}>
         <Image source={icon} style={styles.icon} />
       </TouchableOpacity>
       <Gap height={6} width={0} />

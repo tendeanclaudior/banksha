@@ -17,6 +17,12 @@ import IconTopUpActive from './IconTopUpActive.png';
 import IconSendActive from './IconSendActive.png';
 import IconShopActive from './IconShopActive.png';
 import IconFilter from './IconFilter.svg';
+import IconCard from './IconCard.svg';
+import IconBCA from './IconBCA.png';
+import IconBNI from './IconBNI.png';
+import IconMANDIRI from './IconMANDIRI.png';
+import IconOCBC from './IconOCBC.png';
+import IconBack from './IconBack.svg';
 
 export {
   IconUpload,
@@ -38,4 +44,10 @@ export {
   IconSendActive,
   IconShopActive,
   IconFilter,
+  IconCard,
+  IconBCA,
+  IconBNI,
+  IconMANDIRI,
+  IconOCBC,
+  IconBack,
 };
