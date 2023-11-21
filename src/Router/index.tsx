@@ -11,6 +11,8 @@ import {
   SignUp,
   SplashScreen,
   Statistic,
+  TopUp,
+  Transfer,
   UploadPic,
 } from '../Pages';
 import {ButtomNavigation} from '../Components';
@@ -33,7 +35,7 @@ const MainApp = () => {
       />
       <Tab.Screen
         name="AddMoney"
-        component={Home}
+        component={TopUp}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -86,6 +88,16 @@ const Router = () => {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TopUp"
+        component={TopUp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Transfer"
+        component={Transfer}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

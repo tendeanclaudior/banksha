@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     color: '#14193F',
   },
   inputView: {
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderRadius: 14,
     borderColor: '#EFEEF1',

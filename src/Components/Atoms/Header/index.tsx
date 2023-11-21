@@ -1,19 +1,37 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Fonts, IconFilter} from '../../../Assets';
+import {Fonts, IconBack, IconFilter} from '../../../Assets';
 
 type Props = {
   title: string;
+  onBack?: () => void;
+  onFilter?: () => void;
 };
 
-const Header: FC<Props> = ({title}) => {
+const Header: FC<Props> = ({title, onBack, onFilter}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.content} />
+      {onBack ? (
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonBack}
+          onPress={onBack}>
+          <IconBack />
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.content} />
+      )}
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity activeOpacity={0.5} style={styles.butonView}>
-        <IconFilter />
-      </TouchableOpacity>
+      {onFilter ? (
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.butonFilter}
+          onPress={onFilter}>
+          <IconFilter />
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.content} />
+      )}
     </View>
   );
 };
@@ -29,11 +47,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 28,
   },
-  content: {
-    width: 10,
-    height: 10,
+  buttonBack: {
+    width: 50,
+    height: 50,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
-  butonView: {
+  content: {
+    width: 50,
+    height: 50,
+  },
+  butonFilter: {
     width: 50,
     height: 50,
     alignItems: 'flex-end',

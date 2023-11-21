@@ -8,6 +8,8 @@ import Home from './Home';
 import History from './History';
 import Statistic from './Statistic';
 import Reward from './Reward';
+import TopUp from './TopUp';
+import Transfer from './Transfer';
 
 export {
   SplashScreen,
@@ -20,4 +22,6 @@ export {
   History,
   Statistic,
   Reward,
+  TopUp,
+  Transfer,
 };

@@ -6,6 +6,8 @@ import ProgresBar from './ProgressBar';
 import DoSomething from './DoSomething';
 import LastestTransaction from './LatestTransactions';
 import SendAgain from './SendAgain';
+import Wallet from './Wallet';
+import SelectBank from './SelectBank';
 
 export {
   Paginator,
@@ -16,4 +18,6 @@ export {
   DoSomething,
   LastestTransaction,
   SendAgain,
+  Wallet,
+  SelectBank,
 };

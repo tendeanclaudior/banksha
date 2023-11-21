@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   CardSha,
@@ -20,7 +20,11 @@ import {
   IconWithdraw,
 } from '../../Assets';
 
-const Home = () => {
+type Props = {
+  navigation: {navigate: Function};
+};
+
+const Home: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -45,10 +49,22 @@ const Home = () => {
             <Text style={styles.title}>Do Something</Text>
             <Gap height={14} width={0} />
             <View style={styles.contentDS}>
-              <DoSomething icon={IconTopUp} title={'Top Up'} />
-              <DoSomething icon={IconSend} title={'Send'} />
+              <DoSomething
+                icon={IconTopUp}
+                title={'Top Up'}
+                onPress={() => navigation.navigate('TopUp')}
+              />
+              <DoSomething
+                icon={IconSend}
+                title={'Send'}
+                onPress={() => navigation.navigate('Transfer')}
+              />
               <DoSomething icon={IconWithdraw} title={'Withdraw'} />
-              <DoSomething icon={IconMore} title={'More'} />
+              <DoSomething
+                icon={IconMore}
+                title={'More'}
+                onPress={() => navigation.navigate('')}
+              />
             </View>
           </View>
 
