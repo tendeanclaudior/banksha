@@ -1,7 +1,7 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {FC} from 'react';
-import {Gap, Header, TextInput} from '../../Components';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Fonts} from '../../Assets';
+import {Gap, Header, TextInput} from '../../Components';
 
 type Props = {
   navigation: {goBack: Function};

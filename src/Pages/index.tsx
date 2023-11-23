@@ -10,6 +10,8 @@ import Statistic from './Statistic';
 import Reward from './Reward';
 import TopUp from './TopUp';
 import Transfer from './Transfer';
+import TopUpSuccess from './TopUpSuccess';
+import TopUpAmount from './TopUpAmount';
 
 export {
   SplashScreen,
@@ -24,4 +26,6 @@ export {
   Reward,
   TopUp,
   Transfer,
+  TopUpSuccess,
+  TopUpAmount,
 };

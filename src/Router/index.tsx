@@ -12,6 +12,8 @@ import {
   SplashScreen,
   Statistic,
   TopUp,
+  TopUpAmount,
+  TopUpSuccess,
   Transfer,
   UploadPic,
 } from '../Pages';
@@ -98,6 +100,16 @@ const Router = () => {
       <Stack.Screen
         name="Transfer"
         component={Transfer}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TopUpSuccess"
+        component={TopUpSuccess}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TopUpAmount"
+        component={TopUpAmount}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
