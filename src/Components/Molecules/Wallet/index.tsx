@@ -4,21 +4,26 @@ import {Fonts, IconCard} from '../../../Assets';
 import {Gap} from '../../Atoms';
 
 type Props = {
+  title: string;
   number: string;
-  name: string;
+  name?: string;
+  balance?: string;
 };
 
-const Wallet: FC<Props> = ({number, name}) => {
+const Wallet: FC<Props> = ({title, number, name, balance}) => {
   return (
     <View>
-      <Text style={styles.title}>Wallet</Text>
+      <Text style={styles.title}>{title}</Text>
       <Gap height={10} width={0} />
       <View style={styles.container}>
         <IconCard />
         <View>
           <Text style={styles.titleNumber}>{number}</Text>
           <Gap height={2} width={0} />
-          <Text style={styles.titleName}>{name}</Text>
+          {name && <Text style={styles.titleName}>{name}</Text>}
+          {balance && (
+            <Text style={styles.titleName}>Balance: Rp {balance}</Text>
+          )}
         </View>
       </View>
     </View>

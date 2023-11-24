@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
+  BuyData,
   History,
   Home,
   OnBoarding,
@@ -110,6 +111,11 @@ const Router = () => {
       <Stack.Screen
         name="TopUpAmount"
         component={TopUpAmount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BuyData"
+        component={BuyData}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
