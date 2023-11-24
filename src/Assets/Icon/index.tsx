@@ -23,6 +23,9 @@ import IconBNI from './IconBNI.png';
 import IconMANDIRI from './IconMANDIRI.png';
 import IconOCBC from './IconOCBC.png';
 import IconBack from './IconBack.svg';
+import IconTELKOM from './IconTELKOM.png';
+import IconINDOSAT from './IconINDOSAT.png';
+import IconSINGTEL from './IconSINGTEL.png';
 
 export {
   IconUpload,
@@ -50,4 +53,7 @@ export {
   IconMANDIRI,
   IconOCBC,
   IconBack,
+  IconTELKOM,
+  IconINDOSAT,
+  IconSINGTEL,
 };

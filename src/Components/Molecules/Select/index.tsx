@@ -9,7 +9,7 @@ type Props = {
   time: string;
 };
 
-const SelectBank: FC<Props> = ({image, name, time}) => {
+const Select: FC<Props> = ({image, name, time}) => {
   return (
     <View>
       <View style={styles.container}>
@@ -26,7 +26,7 @@ const SelectBank: FC<Props> = ({image, name, time}) => {
   );
 };
 
-export default SelectBank;
+export default Select;
 
 const styles = StyleSheet.create({
   container: {

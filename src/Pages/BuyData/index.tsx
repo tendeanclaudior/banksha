@@ -1,35 +1,39 @@
-import React, {FC} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Fonts, IconBCA, IconBNI, IconMANDIRI} from '../../Assets';
+import React, {FC} from 'react';
 import {Gap, Header, Select, Wallet} from '../../Components';
+import {Fonts, IconINDOSAT, IconSINGTEL, IconTELKOM} from '../../Assets';
 
 type Props = {
   navigation: {goBack: Function};
 };
 
-const TopUp: FC<Props> = ({navigation}) => {
+const BuyData: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header title={'Top Up'} onBack={() => navigation.goBack()} />
         <View style={styles.container}>
           <Wallet
-            title={'Wallet'}
+            title={'From Wallet'}
             number={'8008 2208 1996'}
-            name={'Claudio Tendean'}
+            balance={'20.000'}
           />
 
           <Gap height={40} width={0} />
 
           <View>
-            <Text style={styles.title}>Select Bank</Text>
+            <Text style={styles.title}>Select Provider</Text>
             <Gap height={10} width={0} />
-            <Select image={IconBCA} name={'BANK BCA'} time={'20 mins'} />
-            <Select image={IconBNI} name={'BANK BNI'} time={'20 mins'} />
+            <Select image={IconTELKOM} name={'Telkomsel'} time={'Available'} />
             <Select
-              image={IconMANDIRI}
-              name={'BANK MANDIRI'}
-              time={'20 mins'}
+              image={IconINDOSAT}
+              name={'Indosat Ooredoo'}
+              time={'Available'}
+            />
+            <Select
+              image={IconSINGTEL}
+              name={'Singtel ID'}
+              time={'Available'}
             />
           </View>
         </View>
@@ -38,7 +42,7 @@ const TopUp: FC<Props> = ({navigation}) => {
   );
 };
 
-export default TopUp;
+export default BuyData;
 
 const styles = StyleSheet.create({
   page: {
