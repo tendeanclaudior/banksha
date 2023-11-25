@@ -78,7 +78,7 @@ const SecurityCode: FC<Props> = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.headerContent}>
           <Text style={styles.title}>Sha PIN</Text>
-          <Gap height={72} width={0} />
+          <Gap height={25} width={0} />
           <View style={styles.input}>
             {[...Array(pinLength).keys()].map(i => {
               const isSelected = code[i] !== undefined && code[i] !== null;
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     borderColor: '#262939',
   },
   titleInput: {
-    fontSize: 36,
+    fontSize: 30,
     fontFamily: Fonts.Poppins[600],
     color: '#FFFFFF',
   },

@@ -1,6 +1,9 @@
 import React, {FC} from 'react';
 import {
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,35 +19,41 @@ type Props = {
 const SignUp: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
-      <View style={styles.container}>
-        <View style={styles.logoView}>
-          <LogoDark />
-        </View>
-        <Gap height={50} width={0} />
-        <View>
-          <Text style={styles.title}>Join Us to Unlock Your Growth</Text>
-          <Gap height={30} width={0} />
-          <View style={styles.formView}>
-            <TextInput title={'Full Name'} />
-            <Gap height={16} width={0} />
-            <TextInput title={'Email Address'} />
-            <Gap height={16} width={0} />
-            <TextInput title={'Password'} />
-            <Gap height={30} width={0} />
-            <Button
-              title={'Continue'}
-              onPress={() => navigation.navigate('UploadPic')}
-            />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.page}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+          <View style={styles.container}>
+            <View style={styles.logoView}>
+              <LogoDark />
+            </View>
+            <Gap height={50} width={0} />
+            <View>
+              <Text style={styles.title}>Join Us to Unlock Your Growth</Text>
+              <Gap height={30} width={0} />
+              <View style={styles.formView}>
+                <TextInput title={'Full Name'} />
+                <Gap height={16} width={0} />
+                <TextInput title={'Email Address'} />
+                <Gap height={16} width={0} />
+                <TextInput title={'Password'} />
+                <Gap height={30} width={0} />
+                <Button
+                  title={'Continue'}
+                  onPress={() => navigation.navigate('UploadPic')}
+                />
+              </View>
+              <Gap height={50} width={0} />
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.buttonCreateAcc}
+                onPress={() => navigation.goBack('SignIn')}>
+                <Text style={styles.createAccTitle}>Sign In</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Gap height={50} width={0} />
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.buttonCreateAcc}
-            onPress={() => navigation.goBack('SignIn')}>
-            <Text style={styles.createAccTitle}>Sign In</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

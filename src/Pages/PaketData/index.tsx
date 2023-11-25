@@ -59,7 +59,7 @@ const PaketData = () => {
                 <TouchableOpacity
                   key={item.id}
                   activeOpacity={0.5}
-                  style={styles.buttonView}>
+                  style={styles.buttonViewGB}>
                   <Text style={styles.titleGB}>{item.name}</Text>
                   <Text style={styles.titleRP}>Rp {item.price}</Text>
                 </TouchableOpacity>
@@ -68,7 +68,9 @@ const PaketData = () => {
           </View>
 
           <View>
-            <Button title={'Continue'} onPress={() => ''} />
+            <View style={styles.button}>
+              <Button title={'Continue'} onPress={() => ''} />
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: 'space-between',
   },
-  buttonView: {
+  buttonViewGB: {
     backgroundColor: '#FFFFFF',
     width: 158,
     height: 171,
@@ -137,5 +139,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: Fonts.Poppins[400],
     color: '#A4A8AE',
+  },
+  button: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    marginBottom: 10,
   },
 });
