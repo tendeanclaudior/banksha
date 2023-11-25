@@ -14,6 +14,7 @@ import TopUpSuccess from './TopUpSuccess';
 import TopUpAmount from './TopUpAmount';
 import BuyData from './BuyData';
 import PaketData from './PaketData';
+import Profile from './Profile';
 
 export {
   SplashScreen,
@@ -32,4 +33,5 @@ export {
   TopUpAmount,
   BuyData,
   PaketData,
+  Profile,
 };

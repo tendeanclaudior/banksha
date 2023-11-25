@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 5,
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
 });

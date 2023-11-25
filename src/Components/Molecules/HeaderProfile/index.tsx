@@ -1,13 +1,14 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Fonts, ProfileDummy} from '../../../Assets';
 import {Gap} from '../../Atoms';
 
 type Props = {
   title: string;
+  onPress: () => void;
 };
 
-const HeaderProfile: FC<Props> = ({title}) => {
+const HeaderProfile: FC<Props> = ({title, onPress}) => {
   return (
     <View style={styles.container}>
       <View>
@@ -15,7 +16,9 @@ const HeaderProfile: FC<Props> = ({title}) => {
         <Gap height={2} width={0} />
         <Text style={styles.subTitle}>{title}</Text>
       </View>
-      <Image source={ProfileDummy} style={styles.profile} />
+      <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+        <Image source={ProfileDummy} style={styles.profile} />
+      </TouchableOpacity>
     </View>
   );
 };

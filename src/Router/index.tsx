@@ -7,6 +7,7 @@ import {
   Home,
   OnBoarding,
   PaketData,
+  Profile,
   Reward,
   SecurityCode,
   SignIn,
@@ -122,6 +123,11 @@ const Router = () => {
       <Stack.Screen
         name="PaketData"
         component={PaketData}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

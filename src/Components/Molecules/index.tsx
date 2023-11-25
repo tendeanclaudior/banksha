@@ -8,6 +8,7 @@ import LastestTransaction from './LatestTransactions';
 import SendAgain from './SendAgain';
 import Wallet from './Wallet';
 import Select from './Select';
+import ProfileContent from './ProfileContent';
 
 export {
   Paginator,
@@ -20,4 +21,5 @@ export {
   SendAgain,
   Wallet,
   Select,
+  ProfileContent,
 };
