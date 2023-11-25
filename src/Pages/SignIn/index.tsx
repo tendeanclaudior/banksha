@@ -1,5 +1,6 @@
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,34 +17,39 @@ type Props = {
 const SignIn: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
-      <View style={styles.container}>
-        <View style={styles.logoView}>
-          <LogoDark />
-        </View>
-        <View>
-          <Text style={styles.title}>Sign In & Grow Your Finance</Text>
-          <Gap height={30} width={0} />
-          <View style={styles.formView}>
-            <TextInput title={'Email Address'} />
-            <Gap height={16} width={0} />
-            <TextInput title={'Password'} />
-            <Gap height={8} width={0} />
-            <Text style={styles.titleForgot}>Forgot Password</Text>
-            <Gap height={30} width={0} />
-            <Button
-              title={'Sign In'}
-              onPress={() => navigation.replace('SecurityCode')}
-            />
+      <ScrollView
+        contentContainerStyle={styles.page}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View style={styles.logoView}>
+            <LogoDark />
           </View>
-          <Gap height={50} width={0} />
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.buttonCreateAcc}
-            onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.createAccTitle}>Create New Account</Text>
-          </TouchableOpacity>
+          <Gap height={25} width={0} />
+          <View>
+            <Text style={styles.title}>Sign In & Grow Your Finance</Text>
+            <Gap height={30} width={0} />
+            <View style={styles.formView}>
+              <TextInput title={'Email Address'} />
+              <Gap height={16} width={0} />
+              <TextInput title={'Password'} />
+              <Gap height={8} width={0} />
+              <Text style={styles.titleForgot}>Forgot Password</Text>
+              <Gap height={30} width={0} />
+              <Button
+                title={'Sign In'}
+                onPress={() => navigation.replace('SecurityCode')}
+              />
+            </View>
+            <Gap height={50} width={0} />
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={styles.buttonCreateAcc}
+              onPress={() => navigation.navigate('SignUp')}>
+              <Text style={styles.createAccTitle}>Create New Account</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

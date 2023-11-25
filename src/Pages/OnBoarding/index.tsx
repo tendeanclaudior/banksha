@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   image: {
-    width: 230,
-    height: 332,
+    width: 160,
+    height: 260,
     justifyContent: 'center',
   },
   boxView: {
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 22,
     paddingVertical: 24,
+    marginBottom: 24,
   },
   titleView: {
     alignItems: 'center',

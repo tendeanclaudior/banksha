@@ -1,28 +1,44 @@
-import {StyleSheet, Text, View, SafeAreaView, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import {Fonts} from '../../Assets';
 import {Button, Gap} from '../../Components';
 
 const TopUpAmount = () => {
   return (
-    <SafeAreaView style={styles.page}>
-      <View style={styles.contianer}>
-        <View>
-          <Text style={styles.title}>Total Amount</Text>
-          <Gap height={67} width={0} />
-          <View style={styles.inputView}>
-            <Text style={styles.titleRP}>RP.</Text>
-            <TextInput style={styles.input} keyboardType="number-pad" />
+    <>
+      <SafeAreaView style={styles.page}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.contianer}>
+            <View>
+              <Text style={styles.title}>Total Amount</Text>
+              <Gap height={67} width={0} />
+              <View style={styles.inputView}>
+                <Text style={styles.titleRP}>RP.</Text>
+                <TextInput style={styles.input} keyboardType="number-pad" />
+              </View>
+            </View>
+            <Gap height={50} width={0} />
+            <View>
+              <View style={styles.footerView}>
+                <View style={styles.buttonView}>
+                  <Button title={'Checkout Now'} onPress={() => ''} />
+                </View>
+                <View>
+                  <Text style={styles.subTitle}>Terms & Conditions</Text>
+                </View>
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={styles.footerView}>
-          <View style={styles.buttonView}>
-            <Button title={'Checkout Now'} onPress={() => ''} />
-          </View>
-          <Text style={styles.subTitle}>Terms & Conditions</Text>
-        </View>
-      </View>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
