@@ -29,7 +29,10 @@ const Home: FC<Props> = ({navigation}) => {
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <HeaderProfile title={'Claudio Tendean'} />
+          <HeaderProfile
+            title={'Claudio Tendean'}
+            onPress={() => navigation.navigate('Profile')}
+          />
 
           <Gap height={20} width={0} />
 

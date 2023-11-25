@@ -22,7 +22,7 @@ const SignUp: FC<Props> = ({navigation}) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.page}>
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
             <View style={styles.logoView}>
               <LogoDark />
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F8FB',
   },
   container: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'space-between',
     paddingHorizontal: 24,
     paddingVertical: 24 * 2,

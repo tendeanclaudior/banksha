@@ -14,7 +14,9 @@ const TopUpAmount = () => {
   return (
     <>
       <SafeAreaView style={styles.page}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={styles.contianer}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.contianer}>
             <View>
               <Text style={styles.title}>Total Amount</Text>

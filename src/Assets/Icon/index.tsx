@@ -26,6 +26,12 @@ import IconBack from './IconBack.svg';
 import IconTELKOM from './IconTELKOM.png';
 import IconINDOSAT from './IconINDOSAT.png';
 import IconSINGTEL from './IconSINGTEL.png';
+import IconEditProfile from './IconEditProfile.png';
+import IconMyPIN from './IconMyPIN.png';
+import IconWalletSettings from './IconWalletSettings.png';
+import IconMyRewards from './IconMyRewards.png';
+import IconHelpCenter from './IconHelpCenter.png';
+import IconLogout from './IconLogout.png';
 
 export {
   IconUpload,
@@ -56,4 +62,10 @@ export {
   IconTELKOM,
   IconINDOSAT,
   IconSINGTEL,
+  IconEditProfile,
+  IconMyPIN,
+  IconWalletSettings,
+  IconMyRewards,
+  IconHelpCenter,
+  IconLogout,
 };
