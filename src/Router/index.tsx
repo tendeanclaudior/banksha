@@ -6,6 +6,7 @@ import {
   History,
   Home,
   OnBoarding,
+  PaketData,
   Reward,
   SecurityCode,
   SignIn,
@@ -116,6 +117,11 @@ const Router = () => {
       <Stack.Screen
         name="BuyData"
         component={BuyData}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PaketData"
+        component={PaketData}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

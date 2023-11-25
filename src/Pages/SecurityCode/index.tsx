@@ -81,7 +81,8 @@ const SecurityCode: FC<Props> = ({navigation}) => {
           <Gap height={72} width={0} />
           <View style={styles.input}>
             {[...Array(pinLength).keys()].map(i => {
-              const isSelected = !!code[i];
+              const isSelected = code[i] !== undefined && code[i] !== null;
+
               return (
                 <View key={i}>
                   {isSelected ? <Text style={styles.titleInput}>*</Text> : ''}
