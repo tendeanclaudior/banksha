@@ -15,6 +15,8 @@ import TopUpAmount from './TopUpAmount';
 import BuyData from './BuyData';
 import PaketData from './PaketData';
 import Profile from './Profile';
+import EditProfile from './EditProfile';
+import EditPIN from './EditPIN';
 
 export {
   SplashScreen,
@@ -34,4 +36,6 @@ export {
   BuyData,
   PaketData,
   Profile,
+  EditProfile,
+  EditPIN,
 };
