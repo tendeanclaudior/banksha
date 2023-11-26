@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   BuyData,
+  EditPIN,
+  EditProfile,
   History,
   Home,
   OnBoarding,
@@ -128,6 +130,16 @@ const Router = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditPIN"
+        component={EditPIN}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
