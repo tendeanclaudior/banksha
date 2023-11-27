@@ -32,6 +32,12 @@ import IconWalletSettings from './IconWalletSettings.png';
 import IconMyRewards from './IconMyRewards.png';
 import IconHelpCenter from './IconHelpCenter.png';
 import IconLogout from './IconLogout.png';
+import IconData from './IconData.png';
+import IconWater from './IconWater.png';
+import IconStream from './IconStream.png';
+import IconMovie from './IconMovie.png';
+import IconFood from './IconFood.png';
+import IconTravel from './IconTravel.png';
 
 export {
   IconUpload,
@@ -68,4 +74,10 @@ export {
   IconMyRewards,
   IconHelpCenter,
   IconLogout,
+  IconData,
+  IconWater,
+  IconStream,
+  IconMovie,
+  IconFood,
+  IconTravel,
 };

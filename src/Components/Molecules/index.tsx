@@ -9,6 +9,8 @@ import SendAgain from './SendAgain';
 import Wallet from './Wallet';
 import Select from './Select';
 import ProfileContent from './ProfileContent';
+import Modal from './Modal';
+import ModalContent from './ModalContent';
 
 export {
   Paginator,
@@ -22,4 +24,6 @@ export {
   Wallet,
   Select,
   ProfileContent,
+  Modal,
+  ModalContent,
 };
