@@ -125,6 +125,9 @@ const Home: FC<Props> = ({navigation}) => {
           setModalVisible(!modalVisible);
           navigation.navigate('BuyData');
         }}
+        screen={() => {
+          setModalVisible(!modalVisible);
+        }}
       />
     </SafeAreaView>
   );
