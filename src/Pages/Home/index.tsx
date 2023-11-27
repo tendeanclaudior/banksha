@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   CardSha,
@@ -6,6 +6,7 @@ import {
   Gap,
   HeaderProfile,
   LastestTransaction,
+  Modal,
   ProgresBar,
   SendAgain,
 } from '../../Components';
@@ -25,6 +26,8 @@ type Props = {
 };
 
 const Home: FC<Props> = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -66,7 +69,7 @@ const Home: FC<Props> = ({navigation}) => {
               <DoSomething
                 icon={IconMore}
                 title={'More'}
-                onPress={() => navigation.navigate('')}
+                onPress={() => setModalVisible(true)}
               />
             </View>
           </View>
@@ -113,6 +116,16 @@ const Home: FC<Props> = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+        onPress={() => {
+          setModalVisible(!modalVisible);
+          navigation.navigate('BuyData');
+        }}
+      />
     </SafeAreaView>
   );
 };
