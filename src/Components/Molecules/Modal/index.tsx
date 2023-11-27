@@ -1,5 +1,12 @@
-import React, {FC} from 'react';
-import {Modal as Modals, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useEffect, useRef} from 'react';
+import {
+  Animated,
+  Modal as Modals,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Fonts,
   IconData,
@@ -12,12 +19,31 @@ import {
 import ModalContent from '../ModalContent';
 
 type Props = {
-  visible: any;
+  visible?: boolean;
   onRequestClose: () => void;
   onPress: () => void;
+  screen: () => void;
 };
 
-const Modal: FC<Props> = ({visible, onRequestClose, onPress}) => {
+const Modal: FC<Props> = ({visible, onRequestClose, onPress, screen}) => {
+  const animeBackDrop = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (visible) {
+      Animated.timing(animeBackDrop, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(animeBackDrop, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible]);
+
   return (
     <View>
       <Modals
@@ -25,7 +51,10 @@ const Modal: FC<Props> = ({visible, onRequestClose, onPress}) => {
         transparent={true}
         visible={visible}
         onRequestClose={onRequestClose}>
-        <View style={styles.container}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.container}
+          onPress={screen}>
           <View style={styles.content}>
             <View style={styles.contentView}>
               <Text style={styles.title}>Do More With Us</Text>
@@ -43,7 +72,7 @@ const Modal: FC<Props> = ({visible, onRequestClose, onPress}) => {
               </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modals>
     </View>
   );
