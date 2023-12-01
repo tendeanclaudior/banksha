@@ -38,6 +38,7 @@ import IconStream from './IconStream.png';
 import IconMovie from './IconMovie.png';
 import IconFood from './IconFood.png';
 import IconTravel from './IconTravel.png';
+import IconCheck from './IconCheck.svg';
 
 export {
   IconUpload,
@@ -80,4 +81,5 @@ export {
   IconMovie,
   IconFood,
   IconTravel,
+  IconCheck,
 };

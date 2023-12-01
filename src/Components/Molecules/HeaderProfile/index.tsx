@@ -1,23 +1,39 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Fonts, ProfileDummy} from '../../../Assets';
+import {Fonts, IconCheck, ProfileDummy} from '../../../Assets';
 import {Gap} from '../../Atoms';
+import {getData} from '../../../Utils/LocalStorage';
 
 type Props = {
-  title: string;
   onPress: () => void;
 };
 
-const HeaderProfile: FC<Props> = ({title, onPress}) => {
+const HeaderProfile: FC<Props> = ({onPress}) => {
+  const [dataProfileUser, setDataProfileUser] = useState(ProfileDummy);
+
+  useEffect(() => {
+    getData('profileUser').then(res => {
+      setDataProfileUser(res);
+    });
+  }, [dataProfileUser]);
+
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>Howdy,</Text>
         <Gap height={2} width={0} />
-        <Text style={styles.subTitle}>{title}</Text>
+        <Text style={styles.subTitle}>{dataProfileUser.name}</Text>
       </View>
       <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
-        <Image source={ProfileDummy} style={styles.profile} />
+        <Image
+          source={{uri: dataProfileUser.profile_picture}}
+          style={styles.profile}
+        />
+        {dataProfileUser.profile_picture !== '' && (
+          <View style={styles.iconView}>
+            <IconCheck />
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -47,5 +63,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Poppins[600],
     color: '#14193F',
     textTransform: 'capitalize',
+  },
+  iconView: {
+    position: 'absolute',
+    top: 0,
+    left: 45,
   },
 });

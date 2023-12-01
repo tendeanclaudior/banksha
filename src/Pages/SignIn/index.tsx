@@ -1,3 +1,4 @@
+import React, {FC} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,15 +7,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import {useDispatch} from 'react-redux';
 import {Fonts, LogoDark} from '../../Assets';
 import {Button, Gap, TextInput} from '../../Components';
+import {setLoading, signInService} from '../../Redux/Action';
+import {UseForm} from '../../Utils';
 
 type Props = {
-  navigation: {navigate: Function; replace: Function};
+  navigation: {navigate: Function; reset: Function};
 };
 
 const SignIn: FC<Props> = ({navigation}) => {
+  const [form, setForm] = UseForm({
+    email: '',
+    password: '',
+  });
+  const dispatch = useDispatch();
+
+  const onSubmit = () => {
+    dispatch(setLoading(true));
+    setForm('reset');
+    dispatch(signInService(form, navigation));
+  };
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView
@@ -29,16 +44,22 @@ const SignIn: FC<Props> = ({navigation}) => {
             <Text style={styles.title}>Sign In & Grow Your Finance</Text>
             <Gap height={30} width={0} />
             <View style={styles.formView}>
-              <TextInput title={'Email Address'} />
+              <TextInput
+                title={'Email Address'}
+                value={form.email}
+                onChangeText={value => setForm('email', value)}
+              />
               <Gap height={16} width={0} />
-              <TextInput title={'Password'} />
+              <TextInput
+                title={'Password'}
+                value={form.password}
+                onChangeText={value => setForm('password', value)}
+                secureTextEntry={true}
+              />
               <Gap height={8} width={0} />
               <Text style={styles.titleForgot}>Forgot Password</Text>
               <Gap height={30} width={0} />
-              <Button
-                title={'Sign In'}
-                onPress={() => navigation.replace('SecurityCode')}
-              />
+              <Button title={'Sign In'} onPress={() => onSubmit()} />
             </View>
             <Gap height={50} width={0} />
             <TouchableOpacity

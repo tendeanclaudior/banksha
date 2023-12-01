@@ -1,40 +1,94 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
+  Alert,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useDispatch, useSelector} from 'react-redux';
 import {Fonts, IconUpload, LogoDark} from '../../Assets';
-import {Button, Gap, TextInput} from '../../Components';
+import {Button, Gap} from '../../Components';
 
 type Props = {
-  navigation: {replace: Function};
+  navigation: {navigate: Function};
 };
 
 const UploadPic: FC<Props> = ({navigation}) => {
+  const [profile_picture, setProfile_Picture] = useState('');
+  const dispatch = useDispatch();
+  const {name} = useSelector(state => state.registerReducer);
+
+  const onSubmit = () => {
+    dispatch({type: 'SET_REGISTER_PICTURE', value: {profile_picture}});
+    navigation.navigate('UploadPIN');
+  };
+
+  const addPhoto = async () => {
+    try {
+      const options = {
+        includeBase64: true,
+        maxWidth: 500,
+        maxHeight: 500,
+        quality: 0.6,
+      };
+
+      const res = await launchImageLibrary(options);
+      const data = res.assets;
+      if (data && data.length) {
+        data.map(item => {
+          setProfile_Picture(`data:${item.type};base64,${item.base64}`);
+        });
+      }
+      if (res.didCancel || res.errorMessage) {
+        Alert.alert('Anda Tidak Memilih Foto');
+      }
+    } catch (error) {
+      console.log('Error AddPhoto', error);
+    }
+  };
+
+  const statement = () => {
+    if (profile_picture === '') {
+      Alert.alert('Masukan Photo anda');
+    } else {
+      return onSubmit();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.container}>
         <View style={styles.logoView}>
           <LogoDark />
         </View>
+        <Gap height={30} width={0} />
         <View>
           <Text style={styles.title}>Join Us to Unlock Your Growth</Text>
           <Gap height={30} width={0} />
           <View style={styles.formView}>
             <View style={styles.UploadContent}>
-              <TouchableOpacity activeOpacity={0.5} style={styles.UpoloadView}>
-                <IconUpload />
-              </TouchableOpacity>
+              {profile_picture ? (
+                <Image
+                  source={{uri: profile_picture}}
+                  style={styles.UpoloadView}
+                />
+              ) : (
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  style={styles.UpoloadView}
+                  onPress={() => addPhoto()}>
+                  <IconUpload />
+                </TouchableOpacity>
+              )}
               <Gap height={16} width={0} />
-              <Text style={styles.titleName}>Claudio Tendean</Text>
+              <Text style={styles.titleName}>{name}</Text>
             </View>
             <Gap height={30} width={0} />
-            <TextInput title={'Set PIN (6 digit number)'} />
-            <Gap height={30} width={0} />
-            <Button title={'Continue'} onPress={() => navigation.replace('')} />
+            <Button title={'Continue'} onPress={() => statement()} />
           </View>
         </View>
       </View>
@@ -51,7 +105,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     paddingHorizontal: 24,
     paddingVertical: 24 * 2,
   },

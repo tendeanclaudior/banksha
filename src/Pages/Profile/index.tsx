@@ -1,6 +1,6 @@
+import React, {FC, useEffect, useState} from 'react';
 import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React, {FC} from 'react';
-import {Gap, Header, ProfileContent} from '../../Components';
+import {useDispatch} from 'react-redux';
 import {
   Fonts,
   IconEditProfile,
@@ -11,12 +11,29 @@ import {
   IconWalletSettings,
   ProfileDummy,
 } from '../../Assets';
+import {Gap, Header, ProfileContent} from '../../Components';
+import {logOutService, setLoading} from '../../Redux/Action';
+import {getData} from '../../Utils/LocalStorage';
 
 type Props = {
   navigation: {goBack: Function};
 };
 
 const Profile: FC<Props> = ({navigation}) => {
+  const [token, setToken] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData('token').then(res => {
+      setToken(res);
+    });
+  }, []);
+
+  const logOut = async () => {
+    dispatch(setLoading(true));
+    dispatch(logOutService(token?.token_type, token?.token, navigation));
+  };
+
   return (
     <SafeAreaView style={styles.page}>
       <Header onBack={() => navigation.goBack('')} title={'My Profile'} />
@@ -37,7 +54,11 @@ const Profile: FC<Props> = ({navigation}) => {
             />
             <ProfileContent image={IconMyRewards} title={'My Rewards'} />
             <ProfileContent image={IconHelpCenter} title={'Help Center'} />
-            <ProfileContent image={IconLogout} title={'Log Out'} />
+            <ProfileContent
+              image={IconLogout}
+              title={'Log Out'}
+              onPress={() => logOut()}
+            />
           </View>
         </View>
         <View>

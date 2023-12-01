@@ -1,16 +1,6 @@
 import React, {FC, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
-  CardSha,
-  DoSomething,
-  Gap,
-  HeaderProfile,
-  LastestTransaction,
-  Modal,
-  ProgresBar,
-  SendAgain,
-} from '../../Components';
-import {
   Fonts,
   IconMore,
   IconSend,
@@ -20,6 +10,16 @@ import {
   IconTopUpActive,
   IconWithdraw,
 } from '../../Assets';
+import {
+  CardSha,
+  DoSomething,
+  Gap,
+  HeaderProfile,
+  LastestTransaction,
+  Modal,
+  ProgresBar,
+  SendAgain,
+} from '../../Components';
 
 type Props = {
   navigation: {navigate: Function};
@@ -32,10 +32,7 @@ const Home: FC<Props> = ({navigation}) => {
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <HeaderProfile
-            title={'Claudio Tendean'}
-            onPress={() => navigation.navigate('Profile')}
-          />
+          <HeaderProfile onPress={() => navigation.navigate('Profile')} />
 
           <Gap height={20} width={0} />
 
