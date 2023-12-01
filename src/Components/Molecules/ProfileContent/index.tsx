@@ -5,11 +5,15 @@ import {Fonts} from '../../../Assets';
 type Props = {
   image: any;
   title: string;
+  onPress?: () => void;
 };
 
-const ProfileContent: FC<Props> = ({image, title}) => {
+const ProfileContent: FC<Props> = ({image, title, onPress}) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.container}
+      onPress={onPress}>
       <Image source={image} style={styles.icon} />
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>

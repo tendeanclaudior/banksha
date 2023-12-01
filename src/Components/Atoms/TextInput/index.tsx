@@ -1,19 +1,44 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {TextInput as InputText, StyleSheet, Text, View} from 'react-native';
 import {Fonts} from '../../../Assets';
 import Gap from '../Gap';
 
 type Props = {
   title: string;
+  value: string;
+  onChangeText: (value: string) => void;
+  secureTextEntry?: boolean;
 };
 
-const TextInput: FC<Props> = ({title}) => {
+const TextInput: FC<Props> = ({
+  title,
+  value,
+  onChangeText,
+  secureTextEntry,
+}) => {
+  const [isFocus, setIsFocus] = useState(false);
+  const styleBorder = isFocus ? '#3783FB' : '#EFEEF1';
+
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
       <Gap height={8} width={0} />
-      <View style={styles.inputView}>
-        <InputText style={styles.input} placeholderTextColor={'#EFEEF1'} />
+      <View
+        style={[
+          styles.inputView,
+          {
+            borderColor: styleBorder,
+          },
+        ]}>
+        <InputText
+          style={styles.input}
+          placeholderTextColor={'#EFEEF1'}
+          value={value}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+        />
       </View>
     </View>
   );

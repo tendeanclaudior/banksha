@@ -11,6 +11,7 @@ import Select from './Select';
 import ProfileContent from './ProfileContent';
 import Modal from './Modal';
 import ModalContent from './ModalContent';
+import Loading from './Loading';
 
 export {
   Paginator,
@@ -26,4 +27,5 @@ export {
   ProfileContent,
   Modal,
   ModalContent,
+  Loading,
 };

@@ -20,6 +20,7 @@ import {
   TopUpAmount,
   TopUpSuccess,
   Transfer,
+  UploadPIN,
   UploadPic,
 } from '../Pages';
 import {ButtomNavigation} from '../Components';
@@ -140,6 +141,11 @@ const Router = () => {
       <Stack.Screen
         name="EditPIN"
         component={EditPIN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="UploadPIN"
+        component={UploadPIN}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

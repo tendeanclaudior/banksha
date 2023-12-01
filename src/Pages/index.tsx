@@ -17,6 +17,7 @@ import PaketData from './PaketData';
 import Profile from './Profile';
 import EditProfile from './EditProfile';
 import EditPIN from './EditPIN';
+import UploadPIN from './UploadPIN';
 
 export {
   SplashScreen,
@@ -38,4 +39,5 @@ export {
   Profile,
   EditProfile,
   EditPIN,
+  UploadPIN,
 };

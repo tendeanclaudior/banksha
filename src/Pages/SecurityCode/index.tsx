@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   FlatList,
   SafeAreaView,
@@ -7,9 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Fonts, IconDelete} from '../../Assets';
 import {Gap} from '../../Components';
+import {getData} from '../../Utils/LocalStorage';
 
 const pinLength = 6;
 
@@ -67,11 +69,28 @@ const DialPad = ({
 };
 
 type Props = {
-  navigation: {replace: Function};
+  navigation: {reset: Function};
 };
 
 const SecurityCode: FC<Props> = ({navigation}) => {
   const [code, setCode] = useState<number[]>([]);
+
+  useEffect(() => {
+    getData('profileUser').then(res => {
+      const myPIN = res?.pin;
+      if (code.length === pinLength) {
+        if (code.join('') !== myPIN) {
+          Alert.alert('Error', 'Maaf PIN yang anda masukan salah', [
+            {text: 'Tutup'},
+          ]);
+          setCode('');
+        } else {
+          navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+          setCode('');
+        }
+      }
+    });
+  }, [code, navigation]);
 
   return (
     <SafeAreaView style={styles.page}>
@@ -99,7 +118,6 @@ const SecurityCode: FC<Props> = ({navigation}) => {
                 setCode(prevCode => prevCode.slice(0, prevCode.length - 1));
               } else if (typeof item === 'number') {
                 if (code.length === pinLength) {
-                  navigation.replace('MainApp');
                   return;
                 }
                 setCode(prevCode => [...prevCode, item]);
