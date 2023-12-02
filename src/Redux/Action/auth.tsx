@@ -28,8 +28,9 @@ export const registerService = (dataRegister, navigation) => dispatch => {
         })
         .then(resp => {
           dispatch(setLoading(false));
-          dispatch({type: 'SET_USER', value: {user: resp.data}});
+          const user = resp?.data;
 
+          storeData('user', user);
           storeData('profileUser', data);
           storeData('token', token);
           navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
@@ -73,16 +74,29 @@ export const signInService = (formRegister, navigation) => dispatch => {
         id: res.data.id,
         pin: res.data.pin,
       };
-      console.log('Data', data);
 
       const token = {
         token_type: res.data.token_type,
         token: res.data.token,
       };
 
-      storeData('profileUser', data);
-      storeData('token', token);
-      navigation.reset({index: 0, routes: [{name: 'SecurityCode'}]});
+      axios
+        .get(`${API_URL}/users`, {
+          headers: {Authorization: `${token.token_type} ${token.token}`},
+        })
+        .then(resp => {
+          dispatch(setLoading(false));
+          const user = resp?.data;
+
+          storeData('user', user);
+          storeData('profileUser', data);
+          storeData('token', token);
+          navigation.reset({index: 0, routes: [{name: 'SecurityCode'}]});
+        })
+        .catch(error => {
+          dispatch(setLoading(false));
+          console.log('Token Error :', error);
+        });
     })
     .catch(err => {
       dispatch(setLoading(false));
@@ -106,7 +120,7 @@ export const logOutService =
       );
       dispatch(setLoading(false));
 
-      clearData(['profileUser', 'token']);
+      clearData(['profileUser', 'token', 'user']);
       navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
       return res.data;
     } catch (err) {

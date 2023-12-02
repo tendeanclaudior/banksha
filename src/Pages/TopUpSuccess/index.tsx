@@ -1,9 +1,13 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {FC} from 'react';
 import {Button, Gap} from '../../Components';
 import {Fonts} from '../../Assets';
 
-const TopUpSuccess = () => {
+type Props = {
+  navigation: {reset: Function};
+};
+
+const TopUpSuccess: FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.container}>
@@ -14,7 +18,12 @@ const TopUpSuccess = () => {
         </Text>
         <Gap height={50} width={0} />
         <View style={styles.buttonView}>
-          <Button title={'Back To Home'} onPress={() => ''} />
+          <Button
+            title={'Back To Home'}
+            onPress={() =>
+              navigation.reset({index: 0, routes: [{name: 'MainApp'}]})
+            }
+          />
         </View>
       </View>
     </SafeAreaView>

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   Fonts,
@@ -20,6 +20,13 @@ import {
   ProgresBar,
   SendAgain,
 } from '../../Components';
+import {getData} from '../../Utils/LocalStorage';
+
+type UserType = {
+  name: string;
+  card_number: string;
+  balance: number;
+};
 
 type Props = {
   navigation: {navigate: Function};
@@ -27,6 +34,13 @@ type Props = {
 
 const Home: FC<Props> = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [user, setUser] = useState<UserType | undefined>();
+
+  useEffect(() => {
+    getData('user').then(res => {
+      setUser(res);
+    });
+  }, [user]);
 
   return (
     <SafeAreaView style={styles.page}>
@@ -37,14 +51,14 @@ const Home: FC<Props> = ({navigation}) => {
           <Gap height={20} width={0} />
 
           <CardSha
-            title={'Claudio Tendean'}
-            titleCard={'1280'}
-            titleAmount={'10.000.000'}
+            title={user?.name || ''}
+            titleCard={user?.card_number.slice(12) || ''}
+            titleAmount={user?.balance || 0}
           />
 
           <Gap height={20} width={0} />
 
-          <ProgresBar />
+          {/* <ProgresBar step={xp} steps={10} /> */}
 
           <Gap height={30} width={0} />
 

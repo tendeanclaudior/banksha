@@ -12,6 +12,8 @@ import React, {FC, useEffect, useState} from 'react';
 import {Fonts, IconDelete} from '../../Assets';
 import {Gap} from '../../Components';
 import {getData} from '../../Utils/LocalStorage';
+// import {useDispatch} from 'react-redux';
+// import {topUpService} from '../../Redux/Action/topup';
 
 const pinLength = 6;
 
@@ -70,27 +72,49 @@ const DialPad = ({
 
 type Props = {
   navigation: {reset: Function};
+  route: any;
 };
 
-const SecurityCode: FC<Props> = ({navigation}) => {
-  const [code, setCode] = useState<number[]>([]);
+const SecurityCode: FC<Props> = ({navigation, route}) => {
+  const [pin, setPIN] = useState<number[]>([]);
+  const {data} = route.params || {};
+  // const dispatch = useDispatch();
+
+  const pinString = pin.join(''); // untuk mengubah array pin menjadi string
+  const pinSpilt = pinString.split('');
 
   useEffect(() => {
     getData('profileUser').then(res => {
       const myPIN = res?.pin;
-      if (code.length === pinLength) {
-        if (code.join('') !== myPIN) {
+      if (pin.length === pinLength) {
+        if (pinString !== myPIN) {
           Alert.alert('Error', 'Maaf PIN yang anda masukan salah', [
-            {text: 'Tutup'},
+            {text: 'Tutup', onPress: () => setPIN([])},
           ]);
-          setCode('');
         } else {
-          navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
-          setCode('');
+          if (data?.nameScreen === 'top_up') {
+            const datas = {
+              ...data,
+              amount: data.amount,
+              pin: pinSpilt,
+              payment_method_code: data.payment_method_code,
+            };
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'TopUpSuccess', params: {nameScreen: 'top_up'}}],
+            });
+            // dispatch(topUpService(datas, navigation));
+            return datas;
+          } else {
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'MainApp'}],
+            });
+          }
         }
       }
     });
-  }, [code, navigation]);
+  }, [pin, navigation]);
 
   return (
     <SafeAreaView style={styles.page}>
@@ -100,7 +124,7 @@ const SecurityCode: FC<Props> = ({navigation}) => {
           <Gap height={25} width={0} />
           <View style={styles.input}>
             {[...Array(pinLength).keys()].map(i => {
-              const isSelected = code[i] !== undefined && code[i] !== null;
+              const isSelected = pin[i] !== undefined && pin[i] !== null;
 
               return (
                 <View key={i}>
@@ -115,12 +139,12 @@ const SecurityCode: FC<Props> = ({navigation}) => {
           <DialPad
             onPress={item => {
               if (item === 'del') {
-                setCode(prevCode => prevCode.slice(0, prevCode.length - 1));
+                setPIN(prevCode => prevCode.slice(0, prevCode.length - 1));
               } else if (typeof item === 'number') {
-                if (code.length === pinLength) {
+                if (pin.length === pinLength) {
                   return;
                 }
-                setCode(prevCode => [...prevCode, item]);
+                setPIN(prevCode => [...prevCode, item]);
               }
             }}
           />
