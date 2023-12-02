@@ -6,10 +6,14 @@ import {Gap} from '../../Atoms';
 type Props = {
   title: string;
   titleCard: string;
-  titleAmount: string;
+  titleAmount: number;
 };
 
 const CardSha: FC<Props> = ({title, titleCard, titleAmount}) => {
+  const formatRupiah = amount => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.circleView} />
@@ -28,7 +32,7 @@ const CardSha: FC<Props> = ({title, titleCard, titleAmount}) => {
 
       <Text style={styles.titileBalance}>Balance</Text>
       <Gap height={5} width={0} />
-      <Text style={styles.titleAmount}>IDR {titleAmount}</Text>
+      <Text style={styles.titleAmount}>IDR {formatRupiah(titleAmount)}</Text>
     </View>
   );
 };

@@ -1,16 +1,33 @@
+import React, {FC, useState} from 'react';
 import {
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  SafeAreaView,
   TextInput,
-  ScrollView,
+  View,
 } from 'react-native';
-import React from 'react';
 import {Fonts} from '../../Assets';
 import {Button, Gap} from '../../Components';
 
-const TopUpAmount = () => {
+type Props = {
+  route: any;
+  navigation: {navigate: Function};
+};
+
+const TopUpAmount: FC<Props> = ({route, navigation}) => {
+  const {payment_method_code, nameScreen} = route.params;
+  const [topUp, setTopUp] = useState('');
+
+  const onSubmit = () => {
+    const data = {
+      payment_method_code: payment_method_code,
+      nameScreen: nameScreen,
+      amount: Number(topUp),
+    };
+    navigation.navigate('SecurityCode', {data: data});
+  };
+
   return (
     <>
       <SafeAreaView style={styles.page}>
@@ -23,14 +40,20 @@ const TopUpAmount = () => {
               <Gap height={67} width={0} />
               <View style={styles.inputView}>
                 <Text style={styles.titleRP}>RP.</Text>
-                <TextInput style={styles.input} keyboardType="number-pad" />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="number-pad"
+                  value={topUp}
+                  onChangeText={value => setTopUp(value)}
+                  placeholderTextColor={'#FFFFFF'}
+                />
               </View>
             </View>
             <Gap height={50} width={0} />
             <View>
               <View style={styles.footerView}>
                 <View style={styles.buttonView}>
-                  <Button title={'Checkout Now'} onPress={() => ''} />
+                  <Button title={'Checkout Now'} onPress={() => onSubmit()} />
                 </View>
                 <View>
                   <Text style={styles.subTitle}>Terms & Conditions</Text>

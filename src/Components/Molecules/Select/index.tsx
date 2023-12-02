@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Fonts} from '../../../Assets';
 import {Gap} from '../../Atoms';
 
@@ -7,22 +7,39 @@ type Props = {
   image: any;
   name: string;
   time: string;
+  onPress: () => void;
+  onBlur: () => void;
 };
 
-const Select: FC<Props> = ({image, name, time}) => {
+const Select: FC<Props> = ({image, name, time, onPress, onBlur}) => {
+  const [isFocus, setIsFocus] = useState(false);
+  const styleBorder = isFocus ? '#3783FB' : '#FFFFFF';
+
   return (
-    <View>
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <Image source={image} style={styles.icon} />
-          <View>
-            <Text style={styles.titleBank}>{name}</Text>
-            <Gap height={2} width={0} />
-            <Text style={styles.titleTime}>{time}</Text>
-          </View>
+    <TouchableOpacity
+      onPress={() => {
+        setIsFocus(true);
+        onPress();
+      }}
+      onBlur={() => {
+        setIsFocus(false);
+        onBlur();
+      }}
+      style={[
+        styles.container,
+        {
+          borderColor: styleBorder,
+        },
+      ]}>
+      <View style={styles.content}>
+        <Image source={image} style={styles.icon} />
+        <View>
+          <Text style={styles.titleBank}>{name}</Text>
+          <Gap height={2} width={0} />
+          <Text style={styles.titleTime}>{time}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -31,6 +48,8 @@ export default Select;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
     width: '100%',
     borderRadius: 20,
     paddingHorizontal: 22,

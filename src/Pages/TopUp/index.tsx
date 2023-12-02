@@ -1,13 +1,41 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Fonts, IconBCA, IconBNI, IconMANDIRI} from '../../Assets';
-import {Gap, Header, Select, Wallet} from '../../Components';
+import {useDispatch, useSelector} from 'react-redux';
+import {Fonts} from '../../Assets';
+import {Button, Gap, Header, Select, Wallet} from '../../Components';
+import {paymentService} from '../../Redux/Action';
+import {getData} from '../../Utils/LocalStorage';
+
+type UserType = {
+  name: string;
+  card_number: string;
+};
 
 type Props = {
-  navigation: {goBack: Function};
+  navigation: {goBack: Function; navigate: Function};
 };
 
 const TopUp: FC<Props> = ({navigation}) => {
+  const [user, setUser] = useState<UserType | undefined>();
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const dispatch = useDispatch();
+  const {data} = useSelector(state => state.bankReducer);
+
+  useEffect(() => {
+    getData('user').then(res => {
+      setUser(res);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    dispatch(paymentService());
+  }, []);
+
+  const formattedCardNumber = user?.card_number?.replace(
+    /(\d{4})(\d{4})(\d{4})(\d{4})/,
+    '$1 $2 $3 $4',
+  );
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -15,8 +43,8 @@ const TopUp: FC<Props> = ({navigation}) => {
         <View style={styles.container}>
           <Wallet
             title={'Wallet'}
-            number={'8008 2208 1996'}
-            name={'Claudio Tendean'}
+            number={formattedCardNumber || ''}
+            name={user?.name || ''}
           />
 
           <Gap height={40} width={0} />
@@ -24,14 +52,32 @@ const TopUp: FC<Props> = ({navigation}) => {
           <View>
             <Text style={styles.title}>Select Bank</Text>
             <Gap height={10} width={0} />
-            <Select image={IconBCA} name={'BANK BCA'} time={'20 mins'} />
-            <Select image={IconBNI} name={'BANK BNI'} time={'20 mins'} />
-            <Select
-              image={IconMANDIRI}
-              name={'BANK MANDIRI'}
-              time={'20 mins'}
-            />
+            {data.map((item, _) => (
+              <Select
+                key={item.id}
+                image={{uri: item.thumbnail}}
+                name={item.name}
+                time={item.time}
+                onPress={() => setCurrentIndex(item.code)}
+                onBlur={() => setCurrentIndex(null)}
+              />
+            ))}
           </View>
+
+          {currentIndex !== null && (
+            <View>
+              <Button
+                title={'Contine'}
+                onPress={() =>
+                  navigation.navigate('TopUpAmount', {
+                    payment_method_code: currentIndex,
+                    nameScreen: 'top_up',
+                  })
+                }
+              />
+              <Gap height={50} width={0} />
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
