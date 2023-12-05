@@ -20,7 +20,8 @@ import {
   ProgresBar,
   SendAgain,
 } from '../../Components';
-import {getData} from '../../Utils/LocalStorage';
+import {useDispatch} from 'react-redux';
+import {userService} from '../../Redux/Action';
 
 type UserType = {
   name: string;
@@ -35,12 +36,11 @@ type Props = {
 const Home: FC<Props> = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState<UserType | undefined>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getData('user').then(res => {
-      setUser(res);
-    });
-  }, [user]);
+    dispatch(userService(setUser));
+  }, []);
 
   return (
     <SafeAreaView style={styles.page}>
@@ -58,7 +58,7 @@ const Home: FC<Props> = ({navigation}) => {
 
           <Gap height={20} width={0} />
 
-          {/* <ProgresBar step={xp} steps={10} /> */}
+          {/* <ProgresBar /> */}
 
           <Gap height={30} width={0} />
 

@@ -52,7 +52,7 @@ const TopUp: FC<Props> = ({navigation}) => {
           <View>
             <Text style={styles.title}>Select Bank</Text>
             <Gap height={10} width={0} />
-            {data.map((item, _) => (
+            {data.map(item => (
               <Select
                 key={item.id}
                 image={{uri: item.thumbnail}}

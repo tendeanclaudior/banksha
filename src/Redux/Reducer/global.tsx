@@ -2,6 +2,7 @@ const initGlobalState = {
   isError: false,
   message: 'Error',
   isLoading: false,
+  isConnected: true,
 };
 
 export const globalReducer = (state = initGlobalState, action) => {
@@ -16,7 +17,14 @@ export const globalReducer = (state = initGlobalState, action) => {
   if (action.type === 'SET_LOADING') {
     return {
       ...state,
-      isLoading: action.value.isLoading,
+      isLoading: action.value,
+    };
+  }
+
+  if (action.type === 'SET_IS_CONNECTED') {
+    return {
+      ...state,
+      isConnected: action.value,
     };
   }
 

@@ -12,6 +12,8 @@ import ProfileContent from './ProfileContent';
 import Modal from './Modal';
 import ModalContent from './ModalContent';
 import Loading from './Loading';
+import SelectUser from './SelectUser';
+import NetWork from './Network';
 
 export {
   Paginator,
@@ -28,4 +30,6 @@ export {
   Modal,
   ModalContent,
   Loading,
+  SelectUser,
+  NetWork,
 };
