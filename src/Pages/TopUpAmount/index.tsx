@@ -25,6 +25,7 @@ const TopUpAmount: FC<Props> = ({route, navigation}) => {
       nameScreen: nameScreen,
       amount: Number(topUp),
     };
+
     navigation.navigate('SecurityCode', {data: data});
   };
 

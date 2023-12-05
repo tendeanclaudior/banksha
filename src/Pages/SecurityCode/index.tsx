@@ -12,8 +12,8 @@ import React, {FC, useEffect, useState} from 'react';
 import {Fonts, IconDelete} from '../../Assets';
 import {Gap} from '../../Components';
 import {getData} from '../../Utils/LocalStorage';
-// import {useDispatch} from 'react-redux';
-// import {topUpService} from '../../Redux/Action/topup';
+import {useDispatch} from 'react-redux';
+import {topUpService, transferService} from '../../Redux/Action/topup';
 
 const pinLength = 6;
 
@@ -71,17 +71,17 @@ const DialPad = ({
 };
 
 type Props = {
-  navigation: {reset: Function};
+  navigation: {reset: Function; replace: Function};
   route: any;
 };
 
 const SecurityCode: FC<Props> = ({navigation, route}) => {
   const [pin, setPIN] = useState<number[]>([]);
   const {data} = route.params || {};
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const pinString = pin.join(''); // untuk mengubah array pin menjadi string
-  const pinSpilt = pinString.split('');
+  const pinSpilt = pinString;
 
   useEffect(() => {
     getData('profileUser').then(res => {
@@ -93,18 +93,21 @@ const SecurityCode: FC<Props> = ({navigation, route}) => {
           ]);
         } else {
           if (data?.nameScreen === 'top_up') {
-            const datas = {
-              ...data,
+            const sendData = {
               amount: data.amount,
               pin: pinSpilt,
               payment_method_code: data.payment_method_code,
             };
-            navigation.reset({
-              index: 0,
-              routes: [{name: 'TopUpSuccess', params: {nameScreen: 'top_up'}}],
-            });
-            // dispatch(topUpService(datas, navigation));
-            return datas;
+
+            dispatch(topUpService(sendData, navigation));
+          } else if (data?.nameScreen === 'transfer') {
+            const sendData = {
+              amount: data.amount,
+              pin: pinSpilt,
+              send_to: data.payment_method_code,
+            };
+
+            dispatch(transferService(sendData, navigation));
           } else {
             navigation.reset({
               index: 0,

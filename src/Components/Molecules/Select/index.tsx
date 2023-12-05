@@ -17,6 +17,7 @@ const Select: FC<Props> = ({image, name, time, onPress, onBlur}) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() => {
         setIsFocus(true);
         onPress();

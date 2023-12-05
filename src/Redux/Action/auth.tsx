@@ -84,11 +84,9 @@ export const signInService = (formRegister, navigation) => dispatch => {
         .get(`${API_URL}/users`, {
           headers: {Authorization: `${token.token_type} ${token.token}`},
         })
-        .then(resp => {
+        .then(() => {
           dispatch(setLoading(false));
-          const user = resp?.data;
 
-          storeData('user', user);
           storeData('profileUser', data);
           storeData('token', token);
           navigation.reset({index: 0, routes: [{name: 'SecurityCode'}]});
@@ -125,7 +123,6 @@ export const logOutService =
       return res.data;
     } catch (err) {
       dispatch(setLoading(false));
-      console.log('Logout Error', err);
       Alert.alert('Logout Error', 'An error occurred while logging out.');
     }
   };

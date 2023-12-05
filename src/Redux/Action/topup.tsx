@@ -15,8 +15,24 @@ export const topUpService = (data, navigation) => dispatch => {
         navigation.replace('TopUpSuccess', {nameScreen: 'top_up'});
       })
       .catch(err => {
-        Alert.alert('Error', err.response, [{text: 'Tutup'}]);
-        console.log('TOPUP ERROR', err.response);
+        Alert.alert('Error', err.response.data.errors.amount[0], [
+          {text: 'Tutup'},
+        ]);
+      });
+  });
+};
+
+export const transferService = (data, navigation) => dispatch => {
+  getData('token').then(token => {
+    axios
+      .post(`${API_URL}/transfers`, data, {
+        headers: {Authorization: `Bearer ${token.token}`},
+      })
+      .then(() => {
+        navigation.replace('TopUpSuccess', {nameScreen: 'transfer'});
+      })
+      .catch(err => {
+        Alert.alert('Error', err.response.data.message, [{text: 'Tutup'}]);
       });
   });
 };
