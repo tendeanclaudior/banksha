@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Fonts, ProfileDummy} from '../../../Assets';
 import {Gap} from '../../Atoms';
@@ -8,7 +8,7 @@ type Props = {
   titleName: string;
   titleEmail: string;
   onPress: () => void;
-  onBlur: () => void;
+  styleBorder: any;
 };
 
 const SelectUser: FC<Props> = ({
@@ -16,23 +16,18 @@ const SelectUser: FC<Props> = ({
   titleName,
   titleEmail,
   onPress,
-  onBlur,
+  styleBorder,
 }) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const styleBorder = isFocus ? '#3783FB' : '#FFFFFF';
-
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => {
-        setIsFocus(true);
-        onPress();
-      }}
-      onBlur={() => {
-        setIsFocus(false);
-        onBlur();
-      }}
-      style={[styles.container, {borderColor: styleBorder}]}>
+      onPress={() => onPress()}
+      style={[
+        styles.container,
+        {
+          borderColor: styleBorder,
+        },
+      ]}>
       {image !== '' ? (
         <Image source={{uri: image}} style={styles.image} />
       ) : (

@@ -10,7 +10,7 @@ type Props = {
 };
 
 const CardSha: FC<Props> = ({title, titleCard, titleAmount}) => {
-  const formatRupiah = amount => {
+  const formatRupiah = (amount: any) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
 

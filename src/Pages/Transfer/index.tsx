@@ -70,6 +70,9 @@ const Transfer: FC<Props> = ({navigation}) => {
     });
   };
 
+  const styleBorder = (item: any) =>
+    currentIndex === item.username ? '#3783FB' : '#FFFFFF';
+
   return (
     <>
       <SafeAreaView style={styles.page}>
@@ -94,14 +97,14 @@ const Transfer: FC<Props> = ({navigation}) => {
                     </View>
 
                     <View style={styles.cardSelect}>
-                      {users.map(item => (
+                      {users?.map((item: any) => (
                         <SelectUser
                           key={item.id}
                           image={item.profile_picture}
                           titleName={item.name}
                           titleEmail={item.username}
-                          onBlur={() => setCurrentIndex(null)}
                           onPress={() => setCurrentIndex(item.username)}
+                          styleBorder={styleBorder(item)}
                         />
                       ))}
                     </View>

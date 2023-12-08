@@ -36,6 +36,9 @@ const TopUp: FC<Props> = ({navigation}) => {
     '$1 $2 $3 $4',
   );
 
+  const styleBorder = (item: any) =>
+    currentIndex === item ? '#3783FB' : '#FFFFFF';
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -52,14 +55,14 @@ const TopUp: FC<Props> = ({navigation}) => {
           <View>
             <Text style={styles.title}>Select Bank</Text>
             <Gap height={10} width={0} />
-            {data.map(item => (
+            {data.map((item: any) => (
               <Select
                 key={item.id}
                 image={{uri: item.thumbnail}}
                 name={item.name}
                 time={item.time}
                 onPress={() => setCurrentIndex(item.code)}
-                onBlur={() => setCurrentIndex(null)}
+                styleBorder={styleBorder(item.code)}
               />
             ))}
           </View>

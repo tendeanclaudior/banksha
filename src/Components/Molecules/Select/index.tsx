@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Fonts} from '../../../Assets';
 import {Gap} from '../../Atoms';
@@ -8,24 +8,14 @@ type Props = {
   name: string;
   time: string;
   onPress: () => void;
-  onBlur: () => void;
+  styleBorder: any;
 };
 
-const Select: FC<Props> = ({image, name, time, onPress, onBlur}) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const styleBorder = isFocus ? '#3783FB' : '#FFFFFF';
-
+const Select: FC<Props> = ({image, name, time, onPress, styleBorder}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => {
-        setIsFocus(true);
-        onPress();
-      }}
-      onBlur={() => {
-        setIsFocus(false);
-        onBlur();
-      }}
+      onPress={() => onPress()}
       style={[
         styles.container,
         {

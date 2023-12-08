@@ -7,10 +7,18 @@ type Props = {
   title: string;
   number: string;
   name?: string;
-  balance?: string;
+  balance?: number;
 };
 
 const Wallet: FC<Props> = ({title, number, name, balance}) => {
+  const formatRupiah = (amount: any) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  const addSpaces = (str: string) => {
+    return str.replace(/(\d{4})/g, '$1 ');
+  };
+
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
@@ -18,11 +26,13 @@ const Wallet: FC<Props> = ({title, number, name, balance}) => {
       <View style={styles.container}>
         <IconCard />
         <View>
-          <Text style={styles.titleNumber}>{number}</Text>
+          <Text style={styles.titleNumber}>{addSpaces(number)}</Text>
           <Gap height={2} width={0} />
           {name && <Text style={styles.titleName}>{name}</Text>}
           {balance && (
-            <Text style={styles.titleName}>Balance: Rp {balance}</Text>
+            <Text style={styles.titleName}>
+              Balance: Rp {formatRupiah(balance)}
+            </Text>
           )}
         </View>
       </View>
