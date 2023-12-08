@@ -1,3 +1,4 @@
+import React, {FC, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,47 +8,51 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {Button, Gap, Header} from '../../Components';
 import {Fonts} from '../../Assets';
+import {Button, Gap, Header} from '../../Components';
 
-const PULSA = [
-  {
-    id: 1,
-    name: '10 GB',
-    price: '218.000',
-  },
-  {
-    id: 2,
-    name: '25 GB',
-    price: '420.000',
-  },
-  {
-    id: 3,
-    name: '40 GB',
-    price: '2.500.000',
-  },
-  {
-    id: 4,
-    name: '99 GB',
-    price: '5.000.000',
-  },
-];
+type Props = {
+  navigation: {goBack: Function; navigate: Function};
+  route: any;
+};
 
-const PaketData = () => {
+const PaketData: FC<Props> = ({navigation, route}) => {
+  const {dataProviders} = route.params;
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const styleBorder = (item: any) =>
+    currentIndex === item.id ? '#53C1F9' : '#FFFFFF';
+  const formatRupiah = (amount: any) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  const onSubmit = () => {
+    const data = {
+      nameScreen: 'paket_data',
+      data_plan_id: currentIndex,
+      phone_number: phoneNumber,
+    };
+    navigation.navigate('SecurityCode', {data});
+  };
+
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}>
-        <Header title="Paket Data" onBack={() => ''} />
+        <Header title="Paket Data" onBack={() => navigation.goBack('')} />
         <View style={styles.container}>
           <View>
             <Text style={styles.title}>Phone Number</Text>
             <Gap height={14} width={0} />
             <View style={styles.inputView}>
               <Text style={styles.codeTitle}>+62</Text>
-              <TextInput style={styles.input} keyboardType="number-pad" />
+              <TextInput
+                style={styles.input}
+                keyboardType="number-pad"
+                value={phoneNumber}
+                onChangeText={value => setPhoneNumber(value)}
+              />
             </View>
 
             <Gap height={40} width={0} />
@@ -55,22 +60,34 @@ const PaketData = () => {
             <Text style={styles.title}>Select Provider</Text>
             <Gap height={14} width={0} />
             <View style={styles.contentButton}>
-              {PULSA.map((item, _) => (
+              {dataProviders?.data?.map((item: any) => (
                 <TouchableOpacity
                   key={item.id}
                   activeOpacity={0.5}
-                  style={styles.buttonViewGB}>
+                  onPress={() => setCurrentIndex(item.id)}
+                  style={[
+                    styles.buttonViewGB,
+                    {
+                      borderColor: styleBorder(item),
+                    },
+                  ]}>
                   <Text style={styles.titleGB}>{item.name}</Text>
-                  <Text style={styles.titleRP}>Rp {item.price}</Text>
+                  <Text style={styles.titleRP}>
+                    Rp {formatRupiah(item.price)}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
 
           <View>
-            <View style={styles.button}>
-              <Button title={'Continue'} onPress={() => ''} />
-            </View>
+            {currentIndex !== null &&
+            phoneNumber !== '' &&
+            phoneNumber.length >= 10 ? (
+              <View style={styles.button}>
+                <Button title={'Continue'} onPress={() => onSubmit()} />
+              </View>
+            ) : null}
           </View>
         </View>
       </ScrollView>
@@ -124,6 +141,8 @@ const styles = StyleSheet.create({
   },
   buttonViewGB: {
     backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
     width: 158,
     height: 171,
     borderRadius: 20,

@@ -5,13 +5,22 @@ import {Fonts} from '../../Assets';
 
 type Props = {
   navigation: {reset: Function};
+  route: any;
 };
 
-const TopUpSuccess: FC<Props> = ({navigation}) => {
+const TopUpSuccess: FC<Props> = ({navigation, route}) => {
+  const {nameScreen} = route.params;
+
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.container}>
-        <Text style={styles.title}>Top Up Wallet Berhasil</Text>
+        <Text style={styles.title}>
+          {nameScreen === 'top_up'
+            ? 'Top Up\nWallet Berhasil'
+            : nameScreen === 'transfer'
+            ? 'Transfer\nBerhasil'
+            : 'Berhasil Transfer'}
+        </Text>
         <Gap height={26} width={0} />
         <Text style={styles.subTitle}>
           Use the money wisely and grow your finance
@@ -47,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: Fonts.Poppins[600],
     color: '#14193F',
-    maxWidth: 150,
     textAlign: 'center',
   },
   subTitle: {

@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -28,6 +29,22 @@ const SignIn: FC<Props> = ({navigation}) => {
     dispatch(setLoading(true));
     setForm('reset');
     dispatch(signInService(form, navigation));
+  };
+
+  const onStatment = () => {
+    if (form.email === '') {
+      return Alert.alert('Error', 'Masukan Email yang sudah anda daftarkan', [
+        {text: 'TUTUP'},
+      ]);
+    } else if (form.password === '') {
+      return Alert.alert(
+        'Error',
+        'Masukan Password yang sudah anda daftarkan',
+        [{text: 'TUTUP'}],
+      );
+    } else {
+      return onSubmit();
+    }
   };
 
   return (
@@ -59,7 +76,7 @@ const SignIn: FC<Props> = ({navigation}) => {
               <Gap height={8} width={0} />
               <Text style={styles.titleForgot}>Forgot Password</Text>
               <Gap height={30} width={0} />
-              <Button title={'Sign In'} onPress={() => onSubmit()} />
+              <Button title={'Sign In'} onPress={() => onStatment()} />
             </View>
             <Gap height={50} width={0} />
             <TouchableOpacity

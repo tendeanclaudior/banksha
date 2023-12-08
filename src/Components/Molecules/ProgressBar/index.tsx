@@ -9,7 +9,7 @@ type Props = {
 };
 
 const ProgresBar: FC<Props> = (step, steps) => {
-  const formatRupiah = amount => {
+  const formatRupiah = (amount: any) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
   const {width: SCREEN_WIDTH} = Dimensions.get('window');

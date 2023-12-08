@@ -13,7 +13,12 @@ import {Fonts, IconDelete} from '../../Assets';
 import {Gap} from '../../Components';
 import {getData} from '../../Utils/LocalStorage';
 import {useDispatch} from 'react-redux';
-import {topUpService, transferService} from '../../Redux/Action/topup';
+import {
+  paketDataService,
+  topUpService,
+  transferService,
+} from '../../Redux/Action/topup';
+import {setLoading} from '../../Redux/Action';
 
 const pinLength = 6;
 
@@ -98,7 +103,8 @@ const SecurityCode: FC<Props> = ({navigation, route}) => {
               pin: pinSpilt,
               payment_method_code: data.payment_method_code,
             };
-
+            setPIN([]);
+            dispatch(setLoading(true));
             dispatch(topUpService(sendData, navigation));
           } else if (data?.nameScreen === 'transfer') {
             const sendData = {
@@ -106,8 +112,18 @@ const SecurityCode: FC<Props> = ({navigation, route}) => {
               pin: pinSpilt,
               send_to: data.payment_method_code,
             };
-
+            setPIN([]);
+            dispatch(setLoading(true));
             dispatch(transferService(sendData, navigation));
+          } else if (data?.nameScreen === 'paket_data') {
+            const sendData = {
+              data_plan_id: data.data_plan_id,
+              phone_number: data.phone_number,
+              pin: pinSpilt,
+            };
+            setPIN([]);
+            dispatch(setLoading(true));
+            dispatch(paketDataService(sendData, navigation));
           } else {
             navigation.reset({
               index: 0,

@@ -84,11 +84,13 @@ export const signInService = (formRegister, navigation) => dispatch => {
         .get(`${API_URL}/users`, {
           headers: {Authorization: `${token.token_type} ${token.token}`},
         })
-        .then(() => {
+        .then(resp => {
+          const user = resp?.data;
           dispatch(setLoading(false));
 
           storeData('profileUser', data);
           storeData('token', token);
+          storeData('user', user);
           navigation.reset({index: 0, routes: [{name: 'SecurityCode'}]});
         })
         .catch(error => {
