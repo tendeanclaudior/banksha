@@ -18,7 +18,7 @@ const LastestTransaction: FC<Props> = ({icon, title, date, amount}) => {
       <View style={styles.titleView}>
         <View>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.date}>{date}</Text>
+          <Text style={styles.date}>{date.slice(0, 10)}</Text>
         </View>
         <Text style={styles.amount}>{amount}</Text>
       </View>

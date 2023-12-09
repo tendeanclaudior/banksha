@@ -1,5 +1,12 @@
-import React, {FC, useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useCallback, useEffect, useState} from 'react';
+import {
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {
   Fonts,
   IconMore,
@@ -36,15 +43,31 @@ type Props = {
 const Home: FC<Props> = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState<UserType | undefined>();
+  const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userService(setUser));
   }, []);
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      dispatch(userService(setUser));
+    }, 1000);
+  }, [user]);
+
   return (
     <SafeAreaView style={styles.page}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => onRefresh()}
+          />
+        }>
         <View style={styles.container}>
           <HeaderProfile onPress={() => navigation.navigate('Profile')} />
 
