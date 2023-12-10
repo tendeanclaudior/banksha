@@ -3,6 +3,7 @@ const initGlobalState = {
   message: 'Error',
   isLoading: false,
   isConnected: true,
+  isRefreshing: false,
 };
 
 export const globalReducer = (state = initGlobalState, action) => {
@@ -25,6 +26,13 @@ export const globalReducer = (state = initGlobalState, action) => {
     return {
       ...state,
       isConnected: action.value,
+    };
+  }
+
+  if (action.type === 'SET_IS_REFRESHING') {
+    return {
+      ...state,
+      isRefreshing: action.value,
     };
   }
 

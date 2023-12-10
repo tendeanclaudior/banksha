@@ -1,18 +1,22 @@
 import React, {FC} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Fonts, ProfileDummy} from '../../../Assets';
+import {Fonts} from '../../../Assets';
 import {Gap} from '../../Atoms';
 
 type Props = {
-  //   image: any;
+  image: any;
   title: string;
+  onPress: () => void;
 };
 
-const SendAgain: FC<Props> = ({title}) => {
+const SendAgain: FC<Props> = ({image, title, onPress}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.5} style={styles.buttonView}>
-        <Image source={ProfileDummy} style={styles.image} />
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.buttonView}
+        onPress={onPress}>
+        <Image source={image} style={styles.image} />
         <Gap height={13} width={0} />
         <Text style={styles.title}>@{title}</Text>
       </TouchableOpacity>
@@ -24,7 +28,6 @@ export default SendAgain;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 30,
     marginRight: 17,
   },
   buttonView: {
@@ -38,6 +41,7 @@ const styles = StyleSheet.create({
   image: {
     width: 45,
     height: 45,
+    borderRadius: 45,
   },
   title: {
     fontSize: 12,

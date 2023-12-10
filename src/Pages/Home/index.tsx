@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Fonts,
   IconMore,
@@ -26,9 +27,15 @@ import {
   Modal,
   ProgresBar,
   SendAgain,
+  TipsCard,
 } from '../../Components';
-import {useDispatch} from 'react-redux';
-import {userService} from '../../Redux/Action';
+import {
+  historyTransferService,
+  isRefreshingService,
+  tipsService,
+  transactionService,
+  userService,
+} from '../../Redux/Action';
 
 type UserType = {
   name: string;
@@ -43,20 +50,31 @@ type Props = {
 const Home: FC<Props> = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState<UserType | undefined>();
-  const [refreshing, setRefreshing] = useState(false);
+  const [username, setUserName] = useState([]);
+  const {data} = useSelector(state => state.transactionReducer);
+  const {isRefreshing} = useSelector(state => state.globalReducer);
+  const {tips} = useSelector(state => state.tipsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userService(setUser));
+    dispatch(transactionService());
+    dispatch(tipsService());
+    dispatch(historyTransferService(setUserName));
   }, []);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
+    dispatch(isRefreshingService(true));
     setTimeout(() => {
-      setRefreshing(false);
+      dispatch(isRefreshingService(false));
       dispatch(userService(setUser));
+      dispatch(transactionService());
     }, 1000);
-  }, [user]);
+  }, [user, data]);
+
+  const formatRupiah = (amount: any) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
 
   return (
     <SafeAreaView style={styles.page}>
@@ -64,7 +82,7 @@ const Home: FC<Props> = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={isRefreshing}
             onRefresh={() => onRefresh()}
           />
         }>
@@ -81,7 +99,7 @@ const Home: FC<Props> = ({navigation}) => {
 
           <Gap height={20} width={0} />
 
-          {/* <ProgresBar /> */}
+          <ProgresBar />
 
           <Gap height={30} width={0} />
 
@@ -114,24 +132,41 @@ const Home: FC<Props> = ({navigation}) => {
             <Text style={styles.title}>Latest Transactions</Text>
             <Gap height={14} width={0} />
             <View style={styles.contentLT}>
-              <LastestTransaction
-                icon={IconTopUpActive}
-                title={'TopUp'}
-                date={'Yesterday'}
-                amount={'+ 450.000'}
-              />
-              <LastestTransaction
-                icon={IconSendActive}
-                title={'Transfer'}
-                date={'Aug 27 2023'}
-                amount={'- 50.000'}
-              />
-              <LastestTransaction
-                icon={IconShopActive}
-                title={'Shop'}
-                date={'Sep 04 2023'}
-                amount={'- 100.000'}
-              />
+              {data.length > 0 ? (
+                <View>
+                  {data.slice(0, 4).map((item: any) => (
+                    <LastestTransaction
+                      key={item.id}
+                      icon={
+                        item.transaction_type.code === 'top_up'
+                          ? IconTopUpActive
+                          : item.transaction_type.code === 'transfer'
+                          ? IconSendActive
+                          : IconShopActive
+                      }
+                      title={
+                        item.transaction_type.code === 'top_up'
+                          ? 'Top Up'
+                          : item.transaction_type.code === 'transfer'
+                          ? 'Transfer'
+                          : 'Internet'
+                      }
+                      date={item.created_at}
+                      amount={
+                        (item.transaction_type.code === 'top_up' ? '+' : '-') +
+                        ' ' +
+                        formatRupiah(item.amount)
+                      }
+                    />
+                  ))}
+                </View>
+              ) : (
+                <View style={styles.contentTitle}>
+                  <Text style={styles.titleTransaction}>
+                    Anda Belum Meliliki Transaksi
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
 
@@ -140,14 +175,50 @@ const Home: FC<Props> = ({navigation}) => {
           <View>
             <Text style={styles.title}>Send Again</Text>
             <Gap height={14} width={0} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <SendAgain title={'Acut'} />
-              <SendAgain title={'Igit'} />
-              <SendAgain title={'Atun'} />
-              <SendAgain title={'Glo'} />
-              <SendAgain title={'Bebel'} />
-            </ScrollView>
+            {username.length > 0 ? (
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                {username.map((item: any) => (
+                  <SendAgain
+                    key={item.id}
+                    image={{uri: item.profile_picture}}
+                    title={item.name.slice(0, 5)}
+                    onPress={() =>
+                      navigation.navigate('TopUpAmount', {
+                        payment_method_code: item.username,
+                        nameScreen: 'transfer',
+                      })
+                    }
+                  />
+                ))}
+              </ScrollView>
+            ) : (
+              <View style={styles.contentTitle}>
+                <Text style={styles.titleTransaction}>
+                  Anda Belum Meliliki Transaksi
+                </Text>
+              </View>
+            )}
           </View>
+
+          <Gap height={30} width={0} />
+
+          {tips.length > 0 && (
+            <View>
+              <Text style={styles.title}>Friendly Tips</Text>
+              <Gap height={14} width={0} />
+              <View style={styles.contentFT}>
+                {tips.map((item: any, index: any) => (
+                  <TipsCard
+                    key={index.toString()}
+                    image={{uri: item.thumbnail}}
+                    title={item.title}
+                  />
+                ))}
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
       <Modal
@@ -193,5 +264,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingTop: 22,
     paddingHorizontal: 22,
+  },
+  contentTitle: {
+    alignItems: 'center',
+    marginBottom: 22,
+  },
+  titleTransaction: {
+    fontSize: 14,
+    fontFamily: Fonts.Poppins[600],
+    color: '#A4A8AE',
+    textAlign: 'center',
+    maxWidth: 250,
+  },
+  contentFT: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
 });
