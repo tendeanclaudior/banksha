@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Fonts,
   IconSendActive,
@@ -16,13 +17,15 @@ import {
   IconTopUpActive,
 } from '../../Assets';
 import {Gap, Header, LastestTransaction} from '../../Components';
+import {isRefreshingService} from '../../Redux/Action';
 import {API_URL} from '../../Service/config';
 import {getData} from '../../Utils/LocalStorage';
 
 const History = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
+  const {isRefreshing} = useSelector(state => state.globalReducer);
+  const dispatch = useDispatch();
 
   const formatRupiah = (amount: any) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -33,13 +36,13 @@ const History = () => {
   }, []);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
+    dispatch(isRefreshingService(true));
     setTimeout(() => {
       getHistory();
-      setRefreshing(false);
+      dispatch(isRefreshingService(false));
       setPage(1);
     }, 1000);
-  }, [refreshing]);
+  }, [isRefreshing]);
 
   const getHistory = () => {
     getData('token').then(token => {
@@ -52,11 +55,11 @@ const History = () => {
           if (page === 1) {
             setData(res.data.data);
           }
-          setRefreshing(false);
+          dispatch(isRefreshingService(false));
         })
         .catch(err => {
           Alert.alert('Error', err.response, [{text: 'TUTUP'}]);
-          setRefreshing(false);
+          dispatch(isRefreshingService(false));
         });
     });
   };
@@ -67,7 +70,7 @@ const History = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={isRefreshing}
             onRefresh={() => onRefresh()}
           />
         }>

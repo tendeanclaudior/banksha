@@ -18,6 +18,7 @@ type Props = {
 const TopUpAmount: FC<Props> = ({route, navigation}) => {
   const {payment_method_code, nameScreen} = route.params;
   const [topUp, setTopUp] = useState('');
+  console.log('payment_method_code', payment_method_code);
 
   const onSubmit = () => {
     const data = {

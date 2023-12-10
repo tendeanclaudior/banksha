@@ -1,53 +1,40 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
-import {Animated, Dimensions, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Animated, Easing, StyleSheet, Text, View} from 'react-native';
 import {Fonts} from '../../../Assets';
 import {Gap} from '../../Atoms';
 
-type Props = {
-  step: any;
-  steps: any;
-};
-
-const ProgresBar: FC<Props> = (step, steps) => {
+const ProgresBar = () => {
   const formatRupiah = (amount: any) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
-  const {width: SCREEN_WIDTH} = Dimensions.get('window');
-  const [width, setWidth] = useState(0);
-  let animatedValue = useRef(new Animated.Value(-1000)).current;
-  let reactive = useRef(new Animated.Value(-1000)).current;
+  const [progress] = useState(new Animated.Value(0));
+  const [level, setLevel] = useState(2); // Sesuaikan level berdasarkan logika aplikasi Anda
+  const [percentage, setPercentage] = useState(150); // Sesuaikan persentase berdasarkan data Anda
+  const [totalAmount, setTotalAmount] = useState(20000); // Sesuaikan totalAmount berdasarkan data Anda
 
   useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: reactive,
-      duration: 1500,
-      useNativeDriver: true,
+    Animated.timing(progress, {
+      toValue: percentage,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: false,
     }).start();
-  }, []);
-
-  useEffect(() => {
-    reactive.setValue(-width + (width * step) / steps);
-  }, [step, width]);
+  }, [percentage]);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
-        <Text style={styles.levelTitle}>Level 1</Text>
+        <Text style={styles.levelTitle}>Level {level}</Text>
         <Text style={styles.persenTitle}>
-          55% <Text style={styles.amountTitle}>of {formatRupiah(20000)}</Text>
+          {percentage}%{' '}
+          <Text style={styles.amountTitle}>of {formatRupiah(totalAmount)}</Text>
         </Text>
       </View>
 
       <Gap height={10} width={0} />
 
-      <View style={[styles.progresOff, {width: SCREEN_WIDTH - 22 / 0.24}]}>
-        <Animated.View
-          onLayout={e => {
-            const newWidth = e.nativeEvent.layout.width;
-            setWidth(newWidth);
-          }}
-          style={[styles.progresOn, {transform: [{translateX: animatedValue}]}]}
-        />
+      <View style={styles.progresOff}>
+        <Animated.View style={[styles.progresOn, {width: percentage}]} />
       </View>
     </View>
   );

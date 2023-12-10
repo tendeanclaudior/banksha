@@ -14,6 +14,8 @@ import ModalContent from './ModalContent';
 import Loading from './Loading';
 import SelectUser from './SelectUser';
 import NetWork from './Network';
+import TipsCard from './TipsCard';
+import ResentUsers from './ResentUsers';
 
 export {
   Paginator,
@@ -32,4 +34,6 @@ export {
   Loading,
   SelectUser,
   NetWork,
+  TipsCard,
+  ResentUsers,
 };
