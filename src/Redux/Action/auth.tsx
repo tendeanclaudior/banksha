@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 import {API_URL} from '../../Service/config';
-import {clearData, storeData} from '../../Utils/LocalStorage';
+import {clearData, getData, storeData} from '../../Utils/LocalStorage';
 import {setLoading} from './global';
 
 export const registerService = (dataRegister, navigation) => dispatch => {
@@ -27,8 +27,10 @@ export const registerService = (dataRegister, navigation) => dispatch => {
           headers: {Authorization: `${token.token_type} ${token.token}`},
         })
         .then(resp => {
-          dispatch(setLoading(false));
           const user = resp?.data;
+
+          dispatch(setLoading(false));
+          dispatch({type: 'SET_USER', value: {user: user}});
 
           storeData('user', user);
           storeData('profileUser', data);
@@ -86,7 +88,9 @@ export const signInService = (formRegister, navigation) => dispatch => {
         })
         .then(resp => {
           const user = resp?.data;
+
           dispatch(setLoading(false));
+          dispatch({type: 'SET_USER', value: {user: user}});
 
           storeData('profileUser', data);
           storeData('token', token);
@@ -110,21 +114,21 @@ export const signInService = (formRegister, navigation) => dispatch => {
     });
 };
 
-export const logOutService =
-  (tokenType, token, navigation) => async dispatch => {
-    try {
-      const res = await axios.post(
-        `${API_URL}/logout`,
-        {},
-        {headers: {Authorization: `${tokenType} ${token}`}},
-      );
-      dispatch(setLoading(false));
+export const logOutService = (navigation: any) => async (dispatch: any) => {
+  try {
+    const token = await getData('token');
+    const res = await axios.post(
+      `${API_URL}/logout`,
+      {},
+      {headers: {Authorization: `Bearer ${token.token}`}},
+    );
+    dispatch(setLoading(false));
 
-      clearData(['profileUser', 'token', 'user']);
-      navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
-      return res.data;
-    } catch (err) {
-      dispatch(setLoading(false));
-      Alert.alert('Logout Error', 'An error occurred while logging out.');
-    }
-  };
+    clearData(['profileUser', 'token', 'user']);
+    navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+    return res.data;
+  } catch (err) {
+    dispatch(setLoading(false));
+    Alert.alert('Logout Error', 'An error occurred while logging out.');
+  }
+};

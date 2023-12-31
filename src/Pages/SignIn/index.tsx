@@ -49,9 +49,7 @@ const SignIn: FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.page}>
-      <ScrollView
-        contentContainerStyle={styles.page}
-        showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.logoView}>
             <LogoDark />

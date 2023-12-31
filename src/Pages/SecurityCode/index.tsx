@@ -18,7 +18,7 @@ import {
   topUpService,
   transferService,
 } from '../../Redux/Action/topup';
-import {setLoading} from '../../Redux/Action';
+import {setLoading, userService} from '../../Redux/Action';
 
 const pinLength = 6;
 
@@ -124,10 +124,13 @@ const SecurityCode: FC<Props> = ({navigation, route}) => {
             setPIN([]);
             dispatch(setLoading(true));
             dispatch(paketDataService(sendData, navigation));
+          } else if (data?.nameScreen === 'edit_profile') {
+            navigation.replace('EditProfile');
           } else {
+            const user = dispatch(userService());
             navigation.reset({
               index: 0,
-              routes: [{name: 'MainApp'}],
+              routes: [{name: 'MainApp', user: user}],
             });
           }
         }

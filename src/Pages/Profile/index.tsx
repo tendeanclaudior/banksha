@@ -9,29 +9,40 @@ import {
   IconMyPIN,
   IconMyRewards,
   IconWalletSettings,
-  ProfileDummy,
 } from '../../Assets';
 import {Gap, Header, ProfileContent} from '../../Components';
 import {logOutService, setLoading} from '../../Redux/Action';
 import {getData} from '../../Utils/LocalStorage';
 
+type UserType = {
+  profile_picture: string;
+  name: string;
+};
+
 type Props = {
-  navigation: {goBack: Function};
+  navigation: {goBack: Function; navigate: Function};
 };
 
 const Profile: FC<Props> = ({navigation}) => {
-  const [token, setToken] = useState('');
+  const [profile, setProfile] = useState<UserType | undefined>();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData('token').then(res => {
-      setToken(res);
+    getData('profileUser').then(res => {
+      setProfile(res);
     });
-  }, []);
+  }, [profile]);
 
   const logOut = async () => {
     dispatch(setLoading(true));
-    dispatch(logOutService(token?.token_type, token?.token, navigation));
+    dispatch(logOutService(navigation));
+  };
+
+  const onEdit = () => {
+    const data = {
+      nameScreen: 'edit_profile',
+    };
+    navigation.navigate('SecurityCode', {data: data});
   };
 
   return (
@@ -40,13 +51,20 @@ const Profile: FC<Props> = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.contentView}>
           <View style={styles.contentProfile}>
-            <Image source={ProfileDummy} style={styles.profile} />
+            <Image
+              source={{uri: profile?.profile_picture}}
+              style={styles.profile}
+            />
             <Gap height={15} width={0} />
-            <Text style={styles.title}>Claudio Tendean</Text>
+            <Text style={styles.title}>{profile?.name}</Text>
           </View>
           <Gap height={26} width={0} />
           <View>
-            <ProfileContent image={IconEditProfile} title={'Edit Profile'} />
+            <ProfileContent
+              image={IconEditProfile}
+              title={'Edit Profile'}
+              onPress={() => onEdit()}
+            />
             <ProfileContent image={IconMyPIN} title={'My PIN'} />
             <ProfileContent
               image={IconWalletSettings}

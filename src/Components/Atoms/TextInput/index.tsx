@@ -8,6 +8,7 @@ type Props = {
   value: string;
   onChangeText: (value: string) => void;
   secureTextEntry?: boolean;
+  editable?: boolean;
 };
 
 const TextInput: FC<Props> = ({
@@ -15,6 +16,7 @@ const TextInput: FC<Props> = ({
   value,
   onChangeText,
   secureTextEntry,
+  editable,
 }) => {
   const [isFocus, setIsFocus] = useState(false);
   const styleBorder = isFocus ? '#3783FB' : '#EFEEF1';
@@ -31,6 +33,7 @@ const TextInput: FC<Props> = ({
           },
         ]}>
         <InputText
+          editable={editable}
           style={styles.input}
           placeholderTextColor={'#EFEEF1'}
           value={value}

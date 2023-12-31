@@ -36,6 +36,7 @@ import {
   transactionService,
   userService,
 } from '../../Redux/Action';
+import {getData} from '../../Utils/LocalStorage';
 
 type UserType = {
   name: string;
@@ -48,6 +49,8 @@ type Props = {
 };
 
 const Home: FC<Props> = ({navigation}) => {
+  // const {user} = useSelector(state => state.userReducer);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState<UserType | undefined>();
   const [username, setUserName] = useState([]);
@@ -55,8 +58,12 @@ const Home: FC<Props> = ({navigation}) => {
   const {isRefreshing} = useSelector(state => state.globalReducer);
   const {tips} = useSelector(state => state.tipsReducer);
   const dispatch = useDispatch();
+  console.log('USER', user);
 
   useEffect(() => {
+    getData('token').then(token => {
+      console.log(token.token);
+    });
     dispatch(userService(setUser));
     dispatch(transactionService());
     dispatch(tipsService());
@@ -152,11 +159,9 @@ const Home: FC<Props> = ({navigation}) => {
                           : 'Internet'
                       }
                       date={item.created_at}
-                      amount={
-                        (item.transaction_type.code === 'top_up' ? '+' : '-') +
-                        ' ' +
-                        formatRupiah(item.amount)
-                      }
+                      amount={`${
+                        item.transaction_type.code === 'top_up' ? '+' : '-'
+                      } ${formatRupiah(item.amount)}`}
                     />
                   ))}
                 </View>

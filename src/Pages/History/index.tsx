@@ -97,11 +97,9 @@ const History = () => {
                         : 'Internet'
                     }
                     date={item.created_at}
-                    amount={
-                      (item.transaction_type.code === 'top_up' ? '+' : '-') +
-                      ' ' +
-                      formatRupiah(item.amount)
-                    }
+                    amount={`${
+                      item.transaction_type.code === 'top_up' ? '+' : '-'
+                    } ${formatRupiah(item.amount)}`}
                   />
                 ))}
               </View>
